@@ -14,6 +14,17 @@ import 'rxjs/add/operator/map';
         right: 16px;
         font-size: 18px;
         }`,
+
+    `#menu{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        font-size: 18px;
+        }`,
+
+    `/deep/ page-home div.scroll-content{
+        padding-top: 0px !important;
+      }`,
   ]
 })
 export class HomePage {
