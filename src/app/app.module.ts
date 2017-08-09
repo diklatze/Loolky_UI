@@ -8,6 +8,8 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { SignUpPage } from '../pages/signUpPage/signUpPage';
+
 import { PageHeader } from '../components/pageHeader/pageHeader';
 import { Menu } from '../components/menu/menu';
 
@@ -15,8 +17,8 @@ import { Menu } from '../components/menu/menu';
   declarations: [
     MyApp,
     Menu,
+    SignUpPage,
     PageHeader,
-
     HomePage
   ],
   imports: [
@@ -29,6 +31,7 @@ import { Menu } from '../components/menu/menu';
   entryComponents: [
     MyApp,
     PageHeader,
+    SignUpPage,
     Menu,
     HomePage
   ],

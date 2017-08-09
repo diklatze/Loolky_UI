@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UserBasic } from './userBasic';
+import {SignUpPage} from '../signUpPage/signUpPage'
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
@@ -31,7 +32,7 @@ export class HomePage {
   myUser: UserBasic = <UserBasic>{};
   diklaString: string;
 
-  constructor(public navCtrl: NavController, public http: Http) { }
+  constructor(protected nav: NavController, public http: Http) { }
 
   postPerson() {
     let headers = new Headers;
@@ -54,4 +55,9 @@ export class HomePage {
       err => { console.log("Oops!"); });
   }
 
+
+  goToSignUp(){
+    this.nav.push(SignUpPage)
+
+  }
 }
