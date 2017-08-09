@@ -6,7 +6,15 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  styles: [
+    `#sign{
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 18px;
+        }`,
+  ]
 })
 export class HomePage {
   myUser: UserBasic = <UserBasic>{};
@@ -30,7 +38,7 @@ export class HomePage {
 
   getDikla() {
     this.http.get('http://localhost:8080/userget')
-      .map((res: Response) => {return res/*.json() */})
+      .map((res: Response) => { return res/*.json() */ })
       .subscribe(data => { debugger; this.diklaString = data['_body'] },
       err => { console.log("Oops!"); });
   }

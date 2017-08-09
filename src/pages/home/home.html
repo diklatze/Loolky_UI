@@ -1,38 +1,18 @@
 <ion-header>
+    <ion-navbar color="secondary">
+        <div id=sign>
+        <button   class="ui left attached button">Sign Up</button>
+        <button   class="right attached ui button">Sign In</button>
+        </div>
+    </ion-navbar>
     <ion-navbar>
         <page-header></page-header>
-
     </ion-navbar>
 </ion-header>
-
-<ion-content>
+<ion-content padding="">
     <menu></menu>
 
-    <!-- <ion-list padding> -->
-
-    <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input [(ngModel)]="myUser.name" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Family name</ion-label>
-        <ion-input [(ngModel)]="myUser.nameFamily"> type="text"></ion-input>
-
-    </ion-item>
-
-
-    <ion-item>
-        <ion-label>Age</ion-label>
-        <ion-input [(ngModel)]="myUser.age" type="number" min="0" max="120"></ion-input>
-    </ion-item>
-
-    <!-- </ion-list> -->
-
-    <!-- <button ion-button value="Refresh Page" (click)="postPerson()">Submit</button> -->
-
-<button ion-button value="dikla" (click)="getDikla()">get Dikla </button>
-{{diklaString}}
+    <button ion-button value="dikla" (click)="getDikla()">get Dikla </button> {{diklaString}}
 
 
 </ion-content>
