@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'page-header',
-  templateUrl: 'pageHeader.html',
+  selector: 'page-footer',
+  templateUrl: 'pageFooter.html',
   styles: [
     `body {
       background-color: #FFFFFF;
@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
       padding: 0em 0em;`,
   ]
 })
-export class PageHeader {
+export class PageFooter {
 
 
 

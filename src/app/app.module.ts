@@ -11,14 +11,17 @@ import { HomePage } from '../pages/home/home';
 import { SignUpPage } from '../pages/signUpPage/signUpPage';
 
 import { PageHeader } from '../components/pageHeader/pageHeader';
-import { Menu } from '../components/menu/menu';
+import { PageFooter } from '../components/pageFooter/pageFooter';
+
+//import { Menu } from '../components/menu/menu';
 
 @NgModule({
   declarations: [
     MyApp,
-    Menu,
+   
     SignUpPage,
     PageHeader,
+    PageFooter,
     HomePage
   ],
   imports: [
@@ -31,8 +34,9 @@ import { Menu } from '../components/menu/menu';
   entryComponents: [
     MyApp,
     PageHeader,
+    PageFooter,
     SignUpPage,
-    Menu,
+    
     HomePage
   ],
   providers: [

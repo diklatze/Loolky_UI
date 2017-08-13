@@ -9,6 +9,26 @@ import 'rxjs/add/operator/map';
   selector: 'page-home',
   templateUrl: 'home.html',
   styles: [
+    `body {
+      background-color: #FFFFFF;
+    }`,
+
+    `.ui.menu .item img.logo {
+      margin-right: 1.5em;
+    }`,
+
+    `.main.container {
+      margin-top: 7em;
+    }`,
+
+   ` .wireframe {
+      margin-top: 2em;
+    }`,
+
+    `.ui.footer.segment {
+      margin: 5em 0em 0em;
+      padding: 5em 0em;`,
+
     `#sign{
         position: absolute;
         top: 8px;
