@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
+import { ViewChild, Directive, ElementRef, OnDestroy, OnInit, Input } from '@angular/core';
 
-/**
- * Generated class for the PageHeaderComponent component.
- *
- * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- * for more info on Angular Components.
- */
+declare var $: any
+
+
 @Component({
   selector: 'page-header',
   templateUrl: 'pageHeader.html',
@@ -22,7 +20,7 @@ import { Component } from '@angular/core';
       margin-top: 7em;
     }`,
 
-   ` .wireframe {
+    ` .wireframe {
       margin-top: 2em;
     }`,
 
@@ -31,12 +29,35 @@ import { Component } from '@angular/core';
       padding: 0em 0em;`,
   ]
 })
-export class PageHeader {
+export class PageHeader implements OnInit {
+
+  //  @ViewChild('descriptionAccordion') descriptionAccordionElementRef: ElementRef;
+   @ViewChild('menuPopup') menuPopupElementRef: ElementRef;
+  
 
 
+  constructor() { }
 
-  constructor() {
-   
+
+   ngOnInit() {
+  //   $(this.descriptionAccordionElementRef.nativeElement)
+  //     .accordion();
+
+  
+
+    $(this.menuPopupElementRef.nativeElement)
+      .popup({
+        inline: true,
+        hoverable: true,
+        position: 'bottom left',
+        delay: {
+          show: 300,
+          hide: 800
+        }
+      });
+    
   }
+
+
 
 }

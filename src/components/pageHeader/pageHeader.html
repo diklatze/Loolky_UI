@@ -3,17 +3,71 @@
     <!-- <ion-title>
       <img src="./assets/images/loolky-logo.png" alt="loolky" id="logoImg">
     </ion-title> -->
+<div class="ui inverted menu page brown">
+  <div class="ui container">
+      <a href="#" class="header item">
+        <img class="logo" src="../../assets/images/loolky-logo.png" style="height: 5em; width: 10em;" >
+        </a>
+  <a class="browse item" #menuPopup>
+    Loolkers' Reviews
+    <i class="dropdown icon"></i>
+  </a>
+  <div class="ui fluid popup bottom left transition hidden" style="top: 554.6px; left: 1px; bottom: auto; right: auto; width: 648.2px;">
+    <div class="ui four column relaxed divided grid">
+      <div class="column">
+        <h4 class="ui header">Which Loolker?</h4>
+        <div class="ui link list">
+          <a class="item">Women</a>
+          <a class="item">Men</a>
+          <a class="item">Kids</a>
+          
+        </div>
+      </div>
+      <div class="column">
+        <h4 class="ui header">Size</h4>
+        <div class="ui link list">
+          <a class="item">Small</a>
+          <a class="item">Medium</a>
+          <a class="item">Large</a>
+          <a class="item">Plus Sizes</a>
+        </div>
+      </div>
+      <div class="column">
+        <h4 class="ui header">Colors</h4>
+        <div class="ui link list">
+          <a class="item">Neutrals</a>
+          <a class="item">Brights</a>
+          <a class="item">Pastels</a>
+        </div>
+      </div>
+      <div class="column">
+        <h4 class="ui header">Types</h4>
+        <div class="ui link list">
+          <a class="item">Knitwear</a>
+          <a class="item">Outerwear</a>
+          <a class="item">Pants</a>
+          <a class="item">Shoes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="item">
+    <i class="cart icon"></i>
+    Checkout
+  </a>
+</div>
+</div>
 
 
-  <div class="ui inverted menu  page" style="padding:0px 10px; margin:0px 0px 0px 0px; border-radius:0px; height:75px; width:100%">>
+  <!-- <div class="ui inverted menu page" style="padding:0px 10px; margin:0px 0px 0px 0px; border-radius:0px; height:75px; width:100%">>
 
     <div class="ui container">
       <a href="#" class="header item">
         <img class="logo" src="../../assets/images/loolky-logo.png" style="height: 5em; width: 5em;" >
         
       </a>
-      <a href="#" class="item">Home</a>
-      <div class="ui simple dropdown item">
+      <a  class="item">Home</a>
+      <div #dropDown class="ui simple dropdown item">
         Dropdown <i class="dropdown icon"></i>
         <div class="menu">
           <a class="item" href="#">Link Item</a>
@@ -32,3 +86,12 @@
       </div>
     </div>
   </div>
+
+   <div #descriptionAccordion class="ui accordion field-content">
+  <div class="title field-content">
+    <label class="field-content">description<a>&nbsp;&nbsp;<i>read more...</i></a></label>
+  </div>
+  <div class="content field-content">
+    <div class="transition hidden field-content">description.</div>
+  </div>
+</div>  -->
