@@ -1,0 +1,165 @@
+a {
+    cursor:pointer;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  /* optional. only if you want the items to wrap */
+  justify-content: center;
+  /* for horizontal alignment */
+  align-items: center;
+  /* for vertical alignment */
+}
+
+.box {
+  height: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.ether{
+  color: blue;
+}
+
+.ui.error.small.form.segment {
+   border-radius: 0px; box-shadow: 0 0 0 0 !important;
+   border: 0px !important;
+}
+
+.item.last:before{
+  width : 0px !important;
+}
+
+.msize{
+  font-size: 1.3em !important;
+}
+
+.dh-table{
+  font-size: 0.7em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  margin-left:auto;margin-right:auto;border-collapse: separate;border-spacing: 0 1em;
+}
+.dh-table.theader{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.back-button-text.back-button-text-ios{ /*IOS remove the 'BACK' word from the navigation back button*/
+   display: none !important;
+}
+
+ion-icon.back-button-icon-ios{ /*IOS ion-nav-bar back button size*/
+   font-size: 2.3rem !important;
+}
+
+ion-icon.back-button-icon-md{ /*Android ion-nav-bar back button size*/
+   font-size: 1.8rem !important;
+}
+button.bar-button-md{ /*Android ion-nav-bar back button size*/
+   padding: 0 0 !important;
+}
+button.back-button-md{ /*Android ion-nav-bar back button size*/
+   margin: 0 0 !important;
+   min-width: 0 !important;
+}
+
+.toolbar-title-md{ /*fix for android ion-nav-bar title to be center aligned*/
+  padding-right: 70px;
+}
+
+.ired{
+  color: red;
+}
+
+.goverment{
+  min-width:250px !important;
+}
+
+.categories{
+  min-width:250px !important;
+}
+
+.clickable {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.not-clickable {
+  cursor: pointer;
+  cursor: default;
+}
+
+.accordion-wrapper { 
+  padding: 0.7em;
+}
+
+/*IE11 line height for my-date-picker fix*/
+my-date-picker .selectiongroup input.selection{
+	line-height: 0 !important;
+}
+/*my-date-picker fix to fit Semantic UI form fields style*/
+div.mydp{
+    border-radius: 0.285714rem;
+    padding: 0.2em;
+    border: 1px solid rgba(34,36,38,0.15);
+}
+/*my-date-picker fix to fit Semantic UI form fields style*/
+div.mydp div.selectiongroup input.selection{
+    border: 0px; /*remove the inner border*/
+}
+/*my-date-picker fix to fit Semantic UI form fields style*/
+.disabled div.mydp{
+      opacity: .65;
+}
+
+my-date-picker.auto-width-selector .mydp .selector{
+  width: auto;
+  z-index: 1000;
+}
+
+/*LoadingController (spinner) loader - use class 'activity-detail-loading' */
+ion-loading.activity-detail-loading div.loading-wrapper{
+  background: transparent;
+  box-shadow: none;
+  transform: scale(3) !important;
+}
+ion-loading.activity-detail-loading ion-backdrop{
+  opacity: 0 !important;
+}
+
+/*mini dropdown - used in filter.component.ts*/
+.mini.ui.dropdown.selection{
+  line-height: 0.35em;
+  min-height: 0.35em;
+}
+.mini.ui.dropdown.boolean.selection{
+  margin-right: -60px;
+  -webkit-padding-after: 0.35em;
+}
+.mini.ui.dropdown.boolean.selection >.text:empty{
+      -webkit-padding-after: 0.95em;
+}
+.mini.ui.dropdown.selection i.dropdown.icon{
+  line-height: 0.6em;
+  min-height: 0.6em;
+}
+.mini.ui.dropdown.selection div.text{
+  font-weight: 100;
+}
+.mini.ui.dropdown div.item{
+  font-size: 0.98em
+}
+
+/*Header menu - TODO: investigate and move to the pageHeader.component.android.ts*/
+#pageHeaderTitle div.toolbar-title{
+  font-size: 91%;
+  text-align: center;
+}

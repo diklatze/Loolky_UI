@@ -1,0 +1,38 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home" padding>
+    <br>
+
+    <div class="ui doubling three column grid">
+        <div class="column clickable" (click)="cetifiedEIs()"><i class="student icon" id="certifiedEIsIcon"></i>Add Certified EI</div>
+        <div class="column clickable" (click)="sendFunds()"><i class="money icon" id="sendFundsIcon"></i>Send Funds</div>
+        <div class="column clickable" (click)="showDashboard()"><i class="bar chart icon" id="dashboardIcon"></i>Dashboard</div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui doubling three column grid">
+        <div class="column clickable" (click)="createMember()"><i class="add user icon" id="createMemberIcon"></i>Add Organization</div>
+        <div class="column clickable" (click)="createUser()"><i class="add user icon" id="createMemberUserIcon"></i>Add Organization User</div>
+        <div class="column clickable" (click)="createApplicationUser()"><i class="add user icon" id="createApplicationUserIcon"></i>Add Application User</div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui doubling three column grid">
+        <div class="column clickable" (click)="loanCategories()"><i class="list icon" id="loanCategoriesIcon"></i>Loan Categories</div>
+        <div class="column clickable" (click)="appliedLoans()"><i class="table icon" id="appliedLoansIcon"></i>Applied Loans</div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui doubling three column grid">
+        <div class="column clickable" (click)="addLoanType()"><i class="dollar icon" id="loanTypeIcon"></i>Add Loan Type</div>
+        <div class="column clickable" (click)="viewLoans()"><i class="list icon" id="loansListIcon"></i>Loans</div>
+        <div class="column clickable" (click)="viewSavedLoans()"><i class="file text outline icon" id="savedLoansIcon"></i>Saved Loans</div>
+    </div>
+
+</ion-content>

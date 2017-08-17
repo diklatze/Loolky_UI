@@ -1,0 +1,59 @@
+<table class="ui compact selectable single line small table">
+    <thead>
+        <tr>
+            <th [attr.colspan]="columns?.length" class="no-bottom-border no-bottom-padding">
+                <ng-container *ngIf="onFiltering?.observers?.length > 0">
+                    <button (click)="refresh()" name="refreshIcon" class="ui compact mini labeled icon button"><i class="refresh  icon"></i>Refresh</button>
+                    <button (click)="clearFilter()" name="clearFilterIcon" class="ui compact mini labeled icon button"><i class="remove icon"></i>Clear filter</button>
+                </ng-container>
+            </th>
+        </tr>
+        <tr>
+            <th [attr.name]="column.fieldName" *ngFor="let column of columns">
+                <div class="clickable th-title" [ngClass]="{clickable: onSorting?.observers?.length > 0}" style="width: 0" (click)="onSortClicked(column.fieldName)">{{column.title}}
+                    <i *ngIf="sort[column.fieldName]!=undefined" class="sort icon" [ngClass]="sort[column.fieldName] == SortDirectionEnum.ASC? 'ascending': 'descending'"></i>
+                </div>
+                <filter *ngIf="onFiltering?.observers?.length > 0" #filter [columnMetadata]="column" (keyup.enter)="onFilteringByEnterKey($event)"></filter>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let row of data" [ngClass]="{clickable: onRowDoubleClick?.observers?.length > 0}" (dblclick)="onRowDblClick($event, row)">
+            <td *ngFor="let column of columns" [attr.name]="column.fieldName" [ngClass]="cellMarkFunction? cellMarkFunction(row, column.fieldName): ''">
+                <cell [value]="getInnerObjectProperty(row, column.fieldName)" [columnMetadata]="column"></cell>
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <th [attr.colspan]="columns?.length">
+
+                <ng-template #hidePagination>
+                    <span>0 rows</span>
+                </ng-template>
+
+                <div [align]="isOnPagingEventRegistered()? 'center': ''" *ngIf="data && data?.length; else hidePagination">
+                    <span [ngClass]="{'left-aligned': isOnPagingEventRegistered()}">
+                        Displaying {{pageInfo?.size * (pageInfo?.number-1) + 1}} - {{pageInfo?.size * (pageInfo?.number-1) + data?.length}} of {{pageInfo?.totalElements}}
+                    </span>
+
+                    <paginator *ngIf="isOnPagingEventRegistered()" [pageInfo]="pageInfo" (onPaging)="onPagingEvent($event)"></paginator>
+
+                    <span class="right-aligned" [hidden]="onPageSizeChange?.observers?.length == 0">Rows per page 
+                        <div id="numOfRowsCombo" #numOfRowsCombo class="ui mini compact selection dropdown">
+                            <i class="dropdown icon"></i>
+                            <div class="text">rows</div> 
+                            <div class="menu">
+                                <div class="item" *ngFor="let pageSizeNum of pageSizeArr">{{pageSizeNum}}</div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+
+            </th>
+        </tr>
+    </tfoot>
+
+</table>

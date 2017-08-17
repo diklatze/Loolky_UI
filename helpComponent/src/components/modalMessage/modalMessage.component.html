@@ -1,0 +1,16 @@
+<div id="msgModal" class="ui small modal">
+    <div *ngIf="header" class="header" id="headerTxt">{{header}}</div>
+    <div class="content">
+        <p id="contentTxt">{{content}}</p>
+    </div>
+    <div class="actions">
+        <div *ngIf="actions" class="ui buttons">
+            <div *ngFor="let action of actions.actions" (click)="action.callback()" [id]="action.buttonId">
+                <div [class]="action.buttonClass != undefined? action.buttonClass: DEFAULT_BUTTON_CLASS" style="margin: 0em 1em 0em 0em">
+                    <i *ngIf="action.iconClass != undefined" [class]="action.iconClass"></i> 
+                    {{action.buttonCaption}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

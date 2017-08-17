@@ -1,0 +1,149 @@
+<modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+<div [hidden]="isSummaryMode" class="ui error small form segment">
+    <form [formGroup]="infoLoanTypeForm" (ngSubmit)="onSubmit(f.value)" class="ui medium form" #f="ngForm">
+
+        <div *ngIf="messages" class="ui error message">
+            <div id="registrationMessage" class="header" *ngFor="let message of messages">{{message.errorDescription}}</div>
+        </div>
+
+        <transactionState [transactionState]="transactionState"></transactionState>
+
+        <div class="two fields">
+            <div class="field four wide">
+                <label>Status</label>
+                <input placeholder="Status" type="text" id="statusTxt" class="form-control disabled" formControlName="status" [(ngModel)]="infoLoanType.status"
+                    formControlName="status">
+            </div>
+            <div class="field four wide">
+                <label>Create date</label>
+                <my-date-picker [locale]="language" [options]="disabledDatePickerOptions" id="createDateTxt" #createDate [ngModel]="getDateForDatePicker('createDate')"
+                    class="form-control disabled" formControlName="createDate"></my-date-picker>
+            </div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Loan code</label>
+            <input maxlength="10" placeholder="Loan code" type="text" id="loanCodeTxt" [(ngModel)]="infoLoanType.loanCode" class="form-control"
+                formControlName="loanCode">
+            <div *ngIf="isInvalid('loanCode')" class="ui red pointing above ui label">{{validationErrorMessage}} loan code</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Name</label>
+            <input maxlength="50" placeholder="Name" type="text" id="nameTxt" [(ngModel)]="infoLoanType.name" class="form-control" formControlName="name">
+            <div *ngIf="isInvalid('name')" class="ui red pointing above ui label">{{validationErrorMessage}} name</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Description</label>
+            <textarea maxlength="500" rows="2" placeholder="Description" id="descriptionTxt" [(ngModel)]="infoLoanType.description" class="form-control"
+                formControlName="description"></textarea>
+            <div *ngIf="isInvalid('description')" class="ui red pointing above ui label">{{validationErrorMessage}} description</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Loan type</label>
+            <select class="ui fluid dropdown form-control" name="type" #typeCombo id="typeCombo" formControlName="type" [(ngModel)]="infoLoanType.type">
+  					<option value="">Select loan type</option>
+					<option *ngFor="let type of metadata.types" [value]="type.code">{{type.name}}</option>
+  				</select>
+            <div *ngIf="isInvalid('type')" class="ui red pointing above ui label">{{validationErrorMessage}} loan type</div>
+        </div>
+
+        <div class="two fields">
+            <div class="field required four wide">
+                <label>Open date</label>
+                <my-date-picker [locale]="language" [options]="datePickerOptions" id="openDate" #openDate class="form-control" formControlName="openDate"
+                    (dateChanged)="infoLoanType.openDate=$event.jsdate" [ngModel]="getDateForDatePicker('openDate')" [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('openDate')" class="ui red pointing above ui label">{{validationErrorMessage}} open date</div>
+            </div>
+
+            <div class="field required four wide">
+                <label>Deadline</label>
+                <!--[ngModel]="getDateForDatePicker('deadlineDate')"-->
+                <my-date-picker [locale]="language" [options]="datePickerOptions" id="deadlineDate" #deadlineDate class="form-control" formControlName="deadlineDate"
+                    (dateChanged)="infoLoanType.deadlineDate=$event.jsdate" [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+
+                <div *ngIf="isInvalid('deadlineDate')" class="ui red pointing above ui label">{{validationErrorMessage}} deadline</div>
+            </div>
+        </div>
+        <div *ngIf="!isInvalid('openDate') && !isInvalid('deadlineDate') && isInvalidDates()" class="ui red pointing above ui label">Open date should be less than deadline date</div>
+
+        <div class="field required two fields">
+            <div class="field four wide">
+                <label>Amount</label>
+                <input type="text" maxlength="10" (keypress)="filterDigitsOnly($event)" placeholder="Amount" id="amountTxt" [(ngModel)]="infoLoanType.amount"
+                    class="form-control" formControlName="amount">
+                <div *ngIf="isInvalid('amount')" class="ui red pointing above ui label">{{validationErrorMessage}} amount</div>
+            </div>
+
+            <div class="field four wide">
+                <label>Currency</label>
+                <input type="text" placeholder="Currency" id="currencyTxt" [value]="metadata.currency" class="disabled" [disabled]="true">
+            </div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Category</label>
+            <!--[(ngModel)]="infoLoanType.categories"-->
+            <select class="ui fluid multiple search selection dropdown form-control" name="categories" #categoryCombo id="categoryCombo"
+                formControlName="categories">
+  					<option value="">Select category</option>
+                    <option value="-1">All</option> 
+					<option *ngFor="let category of metadata.categories" [value]="category.code">{{category.name}}</option>
+  				</select>
+            <div *ngIf="isInvalid('categories')" class="ui red pointing above ui label">{{validationErrorMessage}} category</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Residency</label>
+            <!--[(ngModel)]="infoLoanType.residencies"-->
+            <select class="ui fluid multiple search selection dropdown form-control" name="residencies" #residencyCombo id="residencyCombo"
+                formControlName="residencies">
+  					<option value="">Select residency</option>  
+					<option *ngFor="let residency of metadata.residencies" [value]="residency.code">{{residency.name}}</option>
+  				</select>
+            <div *ngIf="isInvalid('residencies')" class="ui red pointing above ui label">{{validationErrorMessage}} residency</div>
+        </div>
+
+        <div class="field eight wide">
+            <label>% of studies</label>
+        </div>
+        <div class="two fields eight wide">
+            <div class="field four wide required">
+                <label>From</label>
+                <input type="text" maxlength="3" (keypress)="filterDigitsOnly($event)" placeholder="% of studies from" id="percentOfStudiesFromTxt"
+                    [(ngModel)]="infoLoanType.percentOfStudiesFrom" class="form-control disabled" formControlName="percentOfStudiesFrom">
+                <div *ngIf="isInvalid('percentOfStudiesFrom')" class="ui red pointing above ui label">{{validationErrorMessage}} percentage of studies 'From'</div>
+            </div>
+            <div class="field four wide required">
+                <label>To</label>
+                <input type="text" maxlength="3" (keypress)="filterDigitsOnly($event)" placeholder="% of studies to" id="percentOfStudiesToTxt"
+                    [(ngModel)]="infoLoanType.percentOfStudiesTo" class="form-control disabled" formControlName="percentOfStudiesTo">
+                <div *ngIf="isInvalid('percentOfStudiesTo')" class="ui red pointing above ui label">{{validationErrorMessage}} percentage of studies 'To'</div>
+            </div>
+        </div>
+        <div *ngIf="!isInvalid('percentOfStudiesFrom') && !isInvalid('percentOfStudiesTo') && isInvalidPercentage()" class="ui red pointing above ui label">Percentage of study 'From' should be less or equal to percentage 'To'</div>
+    </form>
+
+</div>
+
+<div [hidden]="!isSummaryMode" class="accordion-wrapper">
+    <accordion [title]="accordionTitle" [id]="'infoLoanTypeAccordion'" [isOpen]="true">
+        <div class="ui tiny list">
+            <div id="statusSummaryModeTxt" class="item"><b>Status: </b>{{infoLoanType?.status}}</div>
+            <div id="createDateSummaryModeTxt" class="item"><b>Create date: </b>{{infoLoanType?.createDate | date:'shortDate'}}</div>
+            <div id="loanCodeSummaryModeTxt" class="item"><b>Loan code: </b>{{infoLoanType?.loanCode}}</div>
+            <div id="nameSummaryModeTxt" class="item"><b>Name: </b>{{infoLoanType?.name}}</div>
+            <div id="descriptionSummaryModeTxt" class="item"><b>Description: </b>{{infoLoanType?.description}}</div>
+            <div id="typeSummaryModeTxt" class="item"><b>Loan type: </b>{{infoLoanType.type!=undefined? metadata.types[infoLoanType.type]?.name: ''}}</div>
+            <div id="openDateSummaryModeTxt" class="item"><b>Open date: </b>{{infoLoanType?.openDate | date:'shortDate'}}</div>
+            <div id="deadlineDateSummaryModeTxt" class="item"><b>Deadline: </b>{{infoLoanType?.deadlineDate | date:'shortDate'}}</div>
+            <div id="amountAndCcySummaryModeTxt" class="item"><b>Amount: </b>{{infoLoanType.amount? (infoLoanType.amount | number): ''}} {{metadata.currency}}</div>
+            <div id="categoriesSummaryModeTxt" class="item"><b>Category: </b><span *ngFor="let category of categoriesArr; let isLast=last">{{category?.name}}{{isLast? '': ', '}}</span></div>
+            <div id="residenciesSummaryModeTxt" class="item"><b>Residency: </b><span *ngFor="let residency of getResidenciesArr(); let isLast=last">{{residency?.name}}{{isLast? '': ', '}}</span></div>
+            <div id="percentOfStudiesSummaryModeTxt" class="item"><b>% of studies: </b>From: {{infoLoanType?.percentOfStudiesFrom}} To: {{infoLoanType?.percentOfStudiesTo}}</div>
+        </div>
+    </accordion>
+</div>

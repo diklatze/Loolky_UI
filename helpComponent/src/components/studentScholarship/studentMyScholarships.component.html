@@ -1,0 +1,16 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+<ion-content>
+    <div id="counterTitleTxt" padding>
+        {{myScholarships.length}} {{myScholarships.length > 1? sentences[status].titleSentencePlural: sentences[status].titleSentenceSingle}}
+    </div>
+    <ion-list>
+        <div *ngFor="let myScholarship of myScholarships; let i = index">
+            <studentScholarshipStrip [studentScholarshipData]="myScholarship" [delegateFunction]="loadStudentScholarship" [fields]="myScholarshipFields" [position]="i"
+                [dateSentence]="sentences[status].dateStatusSentence">
+            </studentScholarshipStrip>
+        </div>
+    </ion-list>
+</ion-content>

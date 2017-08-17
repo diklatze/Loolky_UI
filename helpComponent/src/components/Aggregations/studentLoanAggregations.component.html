@@ -1,0 +1,21 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div *ngIf="errMessages" class="ui error message">
+        <div id="messageLbl" *ngFor="let errMessage of errMessages">{{errMessage?.errorDescription}}</div>
+    </div>
+
+    <div class="html ui top attached segment" style="border:0">
+    	<button *ngIf="level > 1" class="ui basic button" (click)="onLevelUp()">
+		  <i class="level up icon"></i>
+		</button>
+        <dataGrid padding [data]="aggregations?.buckets" [columns]="columns" [pageInfo]="pageInfo"
+        			(onRowDoubleClick)="onRowDoubleClick($event)"></dataGrid>
+    </div>
+
+</ion-content>

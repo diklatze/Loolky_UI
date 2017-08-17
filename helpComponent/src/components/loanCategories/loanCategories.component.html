@@ -1,0 +1,19 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment partial">
+        <br>
+        <listManage [mode]="listMode" [title]="listTitle" [noDataMessage]="listNoDataMessage" [data]="listData" [freeTextValidator]="freeTextValidator"></listManage>
+        <br>
+
+        <button id="closeBtn" class="ui blue submit button" (click)="onClose()">Close</button>
+        <button id="publishBtn" class="ui blue submit button" (click)="onPublish()">Publish</button>
+    </div>
+
+    <br>
+</ion-content>

@@ -1,0 +1,34 @@
+<!-- padding bar for iOS -->
+<div showWhen="ios" style="background-color:#f53d3d; padding-top:20px;"></div>
+
+<ion-navbar showWhen="mobile" color="danger" no-border>
+    <ion-buttons begin>
+        <button *ngIf="showProfile" id="profileButton" ion-button icon-only (click)="showStudentProfile()">
+        	<ion-icon name="contact"></ion-icon>
+       	</button>
+
+        <ion-toolbar *ngIf="isShown" class="mobileHeaderToolbar" color="danger">
+            <ion-segment *ngIf="toolbarMenu" id="segmentHeaderMenu" [(ngModel)]="toolbarMenu.selected" color="light">
+
+                <ion-title id="pageHeaderTitle" *ngIf="pageTitle; else noPageHeaderTemplate">{{pageTitle}}</ion-title>
+
+                <ng-template #noPageHeaderTemplate>
+                    <ion-segment-button *ngFor="let menuItem of toolbarMenu.menuItems" (ionSelect)="toolbarSubMenu = menuItem.subMenu; preventDoubleExecution(false,toolbarMenu.selected,menuItem.value,menuItem.onSelectFunction,menuItem)"
+                        [value]="menuItem.value" [id]="menuItem.id">
+                        <span text-wrap>
+                            {{menuItem.caption}}{{!toolbarSubMenu && toolbarMenu.selected == menuItem.value? getCounter(): ''}}
+                        </span>
+                    </ion-segment-button>
+                </ng-template>
+
+            </ion-segment>
+
+            <ion-segment id="segmentHeaderSubmenu" *ngIf="toolbarMenu && toolbarSubMenu" [(ngModel)]="toolbarSubMenu.selected" color="light">
+                <ion-segment-button *ngFor="let subMenuItem of toolbarSubMenu.menuItems" (ionSelect)="preventDoubleExecution(true,toolbarSubMenu.selected,subMenuItem.value,subMenuItem.onSelectFunction,subMenuItem)"
+                    [value]="subMenuItem.value" [id]="subMenuItem.id">
+                    {{subMenuItem.caption}}{{toolbarSubMenu.selected == subMenuItem.value? getCounter(): ''}}</ion-segment-button>
+            </ion-segment>
+        </ion-toolbar>
+
+    </ion-buttons>
+</ion-navbar>

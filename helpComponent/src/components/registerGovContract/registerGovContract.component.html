@@ -1,0 +1,74 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment" style="margin: 0px 0px 0px 0px; border-radius: 0px;">
+        <form [formGroup]="registerContractForm" class="ui large form">
+            <div class="field eight wide">
+                <div *ngIf="messages" class="ui error message">
+                    <div id="memberMessage" *ngFor="let message of messages">{{message.errorDescription}}</div>
+                </div>
+            </div>
+            <div class="field eight wide">
+                <label>Status</label>
+                <input type="text" id="status" class="form-control" [(ngModel)]="registerContract.status" formControlName="status">
+            </div>
+            <div class="field eight wide">
+                <label>Account Address</label>
+                <input type="text" id="accountAddress" class="form-control disabled" [(ngModel)]="registerContract.accountAddress" formControlName="accountAddress">
+            </div>
+            <div class="field eight wide">
+                <label>Member type</label>
+                <input type="text" id="memberFullType" class="form-control" [(ngModel)]="registerContract.memberFullType" formControlName="memberFullType">
+            </div>
+            <div class="field eight wide">
+                <label>Member full name</label>
+                <input type="text" id="memberFullName" class="form-control" [(ngModel)]="registerContract.memberFullName" formControlName="memberFullName">
+            </div>
+            <div class="field eight wide">
+                <label>Member short name</label>
+                <input type="text" id="memberShortName" class="form-control" [(ngModel)]="registerContract.memberShortName" formControlName="memberShortName">
+            </div>
+            <div class="field eight wide">
+                <label>Address line 1</label>
+                <input type="text" id="address1" class="form-control" [(ngModel)]="registerContract.address1" formControlName="address1">
+            </div>
+            <div class="field eight wide">
+                <label>Address line 2</label>
+                <input type="text" id="address2" class="form-control" [(ngModel)]="registerContract.address2" formControlName="address2">
+            </div>
+            <div class="field eight wide">
+                <label>City</label>
+                <input type="text" id="city" class="form-control" [(ngModel)]="registerContract.city" formControlName="city">
+            </div>
+            <div class="field eight wide">
+                <label>Province/State</label>
+                <input type="text" id="stateOrProvince" class="form-control" [(ngModel)]="registerContract.stateOrProvince" formControlName="stateOrProvince">
+            </div>
+            <div class="field eight wide">
+                <label>Zip code</label>
+                <input type="text" id="zipCode" class="form-control" [(ngModel)]="registerContract.zipCode" formControlName="zipCode">
+            </div>
+            <div class="field eight wide">
+                <label>Country</label>
+                <input type="text" id="country" class="form-control" [(ngModel)]="registerContract.country" formControlName="country">
+            </div>
+            <div class="field eight wide">
+                <div class="field required">
+                    <label>Currency</label>
+                    <select class="ui fluid dropdown form-control" id="currency" class="form-control" [(ngModel)]="registerContract.currency"
+                        formControlName="currency">
+                        <option *ngFor="let currency of ccyArr" [value]="currency.value">{{currency.desc}}</option>
+                        </select>
+                    <div *ngIf="registerContractForm.controls['currency'].touched && !registerContractForm.controls['currency'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} currency</div>
+                </div>
+            </div>
+
+            <button [disabled]="disableRegisterBtn" id="registerBtn" class="ui blue submit button" (click)="register()">Register</button>
+        </form>
+    </div>
+</ion-content>

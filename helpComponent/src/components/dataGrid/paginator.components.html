@@ -1,0 +1,32 @@
+<span *ngIf="lastPageNumber" style="padding-right: 30px">Page
+    <div id="pageNumberCombo" #pageNumberCombo class="ui mini compact selection dropdown">
+         <i class="dropdown icon"></i> 
+        <div class="text">page</div>
+        <div class="menu">
+            <div class="item" *ngFor="let page of allPages; let i = index">{{i+1}}</div>
+        </div>
+    </div> / {{lastPageNumber}}
+</span>
+
+
+<div class="ui mini pagination borderless menu">
+    <a class="icon item" name="firstPageButton" [ngClass]="{'disabled': chosenPageNumber <= 1}" (click)="onFirstSelection()">
+            <i class="fast backward icon"></i>
+        </a>
+
+    <a class="icon item" name="previousPageButton" [ngClass]="{'disabled': chosenPageNumber <= 1}" (click)="onPrevSelection()">
+            <i class="step backward icon"></i>
+        </a>
+
+
+    <a class="item" *ngFor="let pageNumber of pages" [ngClass]="{'active': pageNumber == chosenPageNumber}" (click)="onPageChoice(pageNumber)">{{pageNumber}}</a>
+
+
+    <a class="icon item" name="nextPageButton" [ngClass]="{'disabled': chosenPageNumber >= lastPageNumber}" (click)="onNextSelection()">
+            <i class="step forward icon"></i>
+        </a>
+
+    <a class="icon item" name="lastPageButton" [ngClass]="{'disabled': chosenPageNumber >= lastPageNumber}" (click)="onLastSelection()">
+            <i class="fast forward icon"></i>
+        </a>
+</div>

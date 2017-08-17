@@ -1,0 +1,116 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent" [header]="header"></modalMessage>
+    <div *ngIf="userType=='student'" class="grey-bar" padding>
+        <ng-container [ngSwitch]="studentJobOffer.status">
+            <div id="statusMsgTxt" *ngSwitchCase="'Pending'" [style.color]="'green'">Applied on {{studentJobOffer.applyDate | date:'shortDate'}}</div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Approved'" [style.color]="'white'">
+                <ion-icon color="secondary" name="checkmark-circle"></ion-icon> Approved on {{studentJobOffer.updateDate | date:'shortDate'}}
+            </div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Declined'" [style.color]="'red'">Declined on {{studentJobOffer.updateDate | date:'shortDate'}}</div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="userType=='organization'" class="ui huge message noshadow">
+        <div class="ui grid">
+            <!--Left Ad block-->
+            <div hideWhen="mobile" class="four wide column"></div>
+
+            <!-- Central block -->
+            <div [class]="isMobile? 'sixteen wide column': 'eight wide column'">
+                <div id="jobOfferNameTxt" align="center">{{studentJobOffer.jobOffer.info.name}}</div>
+                <br>
+                <div align="center">
+                    <button [disabled]="requestSubmitted" hideWhen="mobile" id="closeBtn" class="ui button gray" (click)="popView()">Close</button>
+                    <button [disabled]="requestSubmitted" id="declineBtn" class="ui button red" (click)="approveDecline(decline)">Decline</button>
+                    <button [disabled]="requestSubmitted" id="approveBtn" class="ui button green" (click)="approveDecline(approve)">Approve</button>
+                </div>
+                <br>
+
+                <div class="ui form">
+                    <div class="field required">
+                        <label>Comments</label>
+                        <textarea maxlength="500" rows="2" placeholder="Comments" id="commentsTxt" (change)="commentsChanged()" [(ngModel)]="comments"></textarea>
+                        <div *ngIf="isInvalidComments" class="ui red pointing above ui label">Comments is mandatory</div>
+                    </div>
+
+                    <div class="ui inverted divider"></div>
+
+                    <div class="field">
+                        <label id="statusLbl" class="header">Status</label>
+                        <div id="statusTxt" class="field-content">{{studentJobOffer.status}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="nameLbl" class="header">Name</label>
+                        <div id="nameTxt" class="field-content">{{studentJobOffer.jobOffer.info.name}}</div>
+                    </div>
+
+                    <div class="ui form">
+                        <div class="field">
+                            <label id="jobBriefLbl" class="header">Job brief</label>
+                            <div id="jobBriefTxt" class="field-content">{{studentJobOffer.jobOffer.info.jobBrief}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="requirementsLbl" class="header">Requirements</label>
+                            <div id="requirementsTxt" class="field-content">{{studentJobOffer.jobOffer.info.requirements}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="workPlaceLbl" class="header">Work place</label>
+                            <div id="workPlaceTxt" class="field-content">{{studentJobOffer.jobOffer.info.workPlace}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="applyDateLbl" class="header">Apply date</label>
+                            <div id="applyDateTxt" class="field-content">{{studentJobOffer.applyDate | date:'shortDate'}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="studentIdLbl" class="header">Student ID</label>
+                            <div id="studentIdTxt" class="field-content">{{studentJobOffer.studentId}}</div>
+                        </div>
+
+                        <!--<div class="field">
+                            <label id="educationalInstitutionLbl" class="header">Educational institution</label>
+                            <div id="educationalInstitutionTxt" class="field-content">{{studentJobOffer.educationalInstitution}}</div>
+                        </div>-->
+
+                        <!--<div class="field">
+                            <label id="facultyLbl" class="header">Faculty</label>
+                            <div id="facultyTxt" class="field-content">{{studentJobOffer.faculty.name}}</div>
+                        </div>-->
+
+                        <!--<div class="field">
+                            <label id="categoryLbl" class="header">Category</label>
+                            <div [id]="'categoryTxt'+i" class="field-content" *ngFor="let category of studentJobOffer.jobOffer.info.categories; let i = index">{{category.name}}</div>
+                        </div>-->
+
+                        <!--Dynamic fields-->
+                        <div class="field" *ngFor="let dynamicField of studentJobOffer.dynamicFields; let i = index">
+                            <label [id]="dynamicField.name+'Lbl'" class="header">{{dynamicField.name}}</label>
+                            <div [id]="dynamicField.name+'Value'" class="field-content">
+                                <dynamicFieldValue [dynamicField]="dynamicField"></dynamicFieldValue>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+                <!--Right Ad block-->
+                <div hideWhen="mobile" class="four wide column"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="userType=='student'">
+        <joboffer [dynamicFieldsWithValues]="studentJobOffer.dynamicFields || []" [jobOffer]=studentJobOffer.jobOffer [buttons]="buttons"></joboffer>
+    </div>
+</ion-content>

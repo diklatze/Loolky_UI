@@ -1,0 +1,40 @@
+<ion-header>
+	<pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+	<pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+	<div>
+		<button class="circular ui toggle icon button" (click)="toggleShowForm()" id="addChartButton">
+			<i class="plus icon"></i>
+		</button>
+		<div class="ui small active modal" *ngIf="show">
+			<div class="content">
+				<chart-selector></chart-selector>
+			</div>
+			<div class="actions">
+				<div class="mini ui buttons">
+					<div *ngIf="!selectedChart || !selectedChart.identifier" class="ui positive approve button" (click)="addChart()">Show chart</div>
+					<div *ngIf="selectedChart && selectedChart.identifier" class="ui positive approve button" (click)="updateChart()">Update chart</div>
+					<div class="or"></div>
+					<div class="ui negative cancel button" (click)="toggleShowForm()">Cancel</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div padding class="ui grid" [ngClass]="getNumberOfRowsClass() + ' column'">
+		<div *ngFor="let chart of selectedCharts" class="column">
+			 <div class="ui segment"> 
+				<div class="ui mini icon buttons">
+					<button class="ui button" (click)="showUpdateChart(chart)"><i class="settings icon"></i></button>
+					<button class="ui button" (click)="deleteChart(chart)"><i class="delete icon"></i></button>
+				</div>
+				<div class="ui segment mychart">
+					<visualize [url]="chart.url"></visualize>
+				</div>
+			 </div> 
+		</div>
+	</div>
+
+</ion-content>

@@ -1,0 +1,31 @@
+<table border="0" width="400" style="border-collapse: separate; border-spacing: 0 1em;">
+
+	<tr>
+		<td width="30%">Select Chart</td>
+		<td>
+			<select class="ui dropdown" [(ngModel)]="dashboard.selectedChart" id="selectChartDropdown">
+				<option *ngIf="dashboard.selectedChart" selected disabled hidden [ngValue]="dashboard.selectedChart">{{dashboard.selectedChart.description}}</option>
+				<option *ngFor="let chart of dashboard.availableCharts" [ngValue]="chart">{{chart.description}}</option>
+		</select></td>
+	</tr>
+
+</table>
+
+<p></p>
+
+<table *ngIf="dashboard.selectedChart" border="0" width="400"
+	style="border-collapse: separate; border-spacing: 0 1em;">
+
+	<tr *ngFor="let param of dashboard.selectedChart.parameters">
+
+		<td width="30%">{{param.label}}</td>
+
+		<td>
+			<select class="ui dropdown" [(ngModel)]="param.selected" id="selectChartParamOptionDropdown">
+				<option *ngFor="let opt of param.values" [ngValue]="opt.value">{{opt.desc}}</option>
+			</select>
+		</td>
+
+	</tr>
+
+</table>

@@ -1,0 +1,116 @@
+<ion-header *ngIf="!hideHeader">
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent" [header]="header"></modalMessage>
+    <div *ngIf="userType==UserType.Student.toString()" class="grey-bar" padding>
+        <ng-container [ngSwitch]="studentLoan.status">
+            <div id="statusMsgTxt" *ngSwitchCase="'Pending'" [style.color]="'green'">Applied on {{studentLoan.loanApplyDate | date:'shortDate'}}</div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Approved'" [style.color]="'white'">
+                <ion-icon color="secondary" name="checkmark-circle"></ion-icon> Approved on {{studentLoan.updateDate | date:'shortDate'}}
+            </div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Declined'" [style.color]="'red'">Declined on {{studentLoan.updateDate | date:'shortDate'}}</div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="userType==UserType.Government.toString() || userType==UserType.EIUser.toString()" class="ui huge message noshadow">
+        <div class="ui grid">
+            <!--Left Ad block-->
+            <div hideWhen="mobile" class="four wide column"></div>
+
+            <!-- Central block -->
+            <div [class]="isMobile? 'sixteen wide column': 'eight wide column'">
+                <div id="loanNameTxt" align="center">{{studentLoan.loanType.info.name}}</div>
+                <br>
+                <div align="center">
+                    <button [disabled]="requestSubmitted" hideWhen="mobile" id="closeBtn" class="ui button gray" (click)="popView()">Close</button>
+                    <button *ngIf="!updateMode" [disabled]="requestSubmitted" id="declineBtn" class="ui button red" (click)="approveDecline(decline)">Decline</button>
+                    <button *ngIf="!updateMode" [disabled]="requestSubmitted" id="approveBtn" class="ui button green" (click)="approveDecline(approve)">Approve</button>
+                </div>
+                <br>
+
+                <div class="ui form">
+                    <div *ngIf="!updateMode" class="field required">
+                        <label>Comments</label>
+                        <textarea maxlength="500" rows="2" placeholder="Comments" id="commentsTxt" (change)="commentsChanged()" [(ngModel)]="comments"></textarea>
+                        <div *ngIf="isInvalidComments" class="ui red pointing above ui label">Comments is mandatory</div>
+                    </div>
+
+                    <div class="ui inverted divider"></div>
+
+                    <div class="field">
+                        <label id="statusLbl" class="header">Status</label>
+                        <div id="statusTxt" class="field-content">{{studentLoan.status}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="nameLbl" class="header">Name</label>
+                        <div id="nameTxt" class="field-content">{{studentLoan.loanType.info.name}}</div>
+                    </div>
+
+                    <div class="ui form">
+                        <div class="field">
+                            <label id="descriptionLbl" class="header">Description</label>
+                            <div id="descriptionTxt" class="field-content">{{studentLoan.loanType.info.description}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="loanTypeLbl" class="header">Loan type</label>
+                            <div id="loanTypeTxt" class="field-content">{{studentLoan.loanType.info.type}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="deadlineDateLbl" class="header">Deadline</label>
+                            <div id="deadlineDateTxt" class="field-content">{{studentLoan.loanType.info.deadlineDate | date:'shortDate'}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="applyDateLbl" class="header">Loan apply date</label>
+                            <div id="applyDateTxt" class="field-content">{{studentLoan.loanApplyDate | date:'shortDate'}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="studentIdLbl" class="header">Student ID</label>
+                            <div id="studentIdTxt" class="field-content">{{studentLoan.studentId}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="educationalInstitutionLbl" class="header">Educational institution</label>
+                            <div id="educationalInstitutionTxt" class="field-content">{{studentLoan.educationalInstitution}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="facultyLbl" class="header">Faculty</label>
+                            <div id="facultyTxt" class="field-content">{{studentLoan.faculty.name}}</div>
+                        </div>
+
+                        <div class="field">
+                            <label id="categoryLbl" class="header">Category</label>
+                            <div [id]="'categoryTxt'+i" class="field-content" *ngFor="let category of studentLoan.loanType.info.categories; let i = index">{{category.name}}</div>
+                        </div>
+
+                        <!--Dynamic fields-->
+                        <div class="field" *ngFor="let dynamicField of studentLoan.dynamicFields; let i = index">
+                            <label [id]="dynamicField.name+'Lbl'" class="header">{{dynamicField.name}}</label>
+                            <div [id]="dynamicField.name+'Value'" class="field-content">
+                                <dynamicFieldValue [dynamicField]="dynamicField"></dynamicFieldValue>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+                <!--Right Ad block-->
+                <div hideWhen="mobile" class="four wide column"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="userType==UserType.Student.toString()">
+        <loanType [dynamicFieldsWithValues]="studentLoan.dynamicFields || []" [loanType]=studentLoan.loanType [buttons]="buttons"></loanType>
+    </div>
+</ion-content>

@@ -1,0 +1,16 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+<ion-content>
+    <div id="counterTitleTxt" padding>
+        {{myJobOffers.length}} {{myJobOffers.length > 1? sentences[status].titleSentencePlural: sentences[status].titleSentenceSingle}}
+    </div>
+    <ion-list>
+        <div *ngFor="let myJobOffer of myJobOffers; let i = index">
+            <studentJobOfferStrip [studentJobOfferData]="myJobOffer" [delegateFunction]="loadStudentJobOffer" [fields]="myJobOfferFields"
+                [position]="i" [dateSentence]="sentences[status].dateStatusSentence">
+            </studentJobOfferStrip>
+        </div>
+    </ion-list>
+</ion-content>

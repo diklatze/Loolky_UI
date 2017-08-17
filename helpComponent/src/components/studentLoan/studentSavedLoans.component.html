@@ -1,0 +1,16 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+<ion-content>
+      <div id="counterTitleTxt" padding>
+        {{loans.length}} {{loans.length > 1? sentences.titleSentencePlural: sentences.titleSentenceSingle}}
+    </div>  
+    <ion-list>
+        <div *ngFor="let loan of loans; let i = index">
+            <loanTypeStrip [loanTypeData]="loan" [delegateFunction]="loadLoan" [fields]="savedLoanFields" [position]="i" [dateSentence]="sentences.dateStatusSentence" 
+                [afterActionFunction]="filterAndUpdate" [userId]="username" [loanTypeStripMode]="loanTypeStripMode" [hideheart]="false">
+            </loanTypeStrip>
+        </div>
+    </ion-list>
+</ion-content>

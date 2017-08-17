@@ -1,0 +1,27 @@
+<ion-header>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home" padding>
+        <br>
+
+        <div class="ui doubling three column grid">
+            <div class="column clickable"><i class="money icon" id="myLoansBtn"></i>My Loans</div>
+            <div class="column clickable" (click)="eligibleLoans()"><i class="search icon" id="myEligibleLoansBtn"></i>Find Eligible Loans</div>
+        </div>
+
+        <br><br><br>
+
+        <div class="ui doubling three column grid">
+            <div class="column clickable"><i class="money icon" id="myScholarshipsBtn"></i>My Scholarships</div>
+            <div class="column clickable" (click)="eligibleScholarships()"><i class="search icon" id="myEligibleScholarshipsBtn"></i>Find Eligible Scholarships</div>
+        </div>
+
+        <br><br><br>
+
+        <div class="ui doubling three column grid">
+            <div class="column clickable"><i class="money icon" id="myJobOfferBtn"></i>My Job Offers</div>
+            <div class="column clickable" (click)="eligibleJobOffers()"><i class="search icon" id="myEligibleJobOfferBtn"></i>Find Eligible Job Offers</div>
+        </div>
+        
+</ion-content> 

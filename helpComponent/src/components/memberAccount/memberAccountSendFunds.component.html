@@ -1,0 +1,48 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment">
+        <form [formGroup]="sendFundsForm" (ngSubmit)="onSend(f.value)" class="ui medium form" #f="ngForm">
+            <div *ngIf="messages" class="ui error message">
+                <div id="registrationMessage" class="header" *ngFor="let message of messages">{{message.errorDescription}}</div>
+            </div>
+            <div class="two fields">
+                <div class="field required four wide">
+                    <label>To</label>
+                    <select name="toMemberTxt" class="ui dropdown" id="toMemberCombo" [(ngModel)]="toMember" formControlName="toMember" (change)="onMemberChange($event.target.value)">
+                        <option *ngFor="let certifiedMember of certifiedMembers" [value]="certifiedMember.shortName">{{certifiedMember.fullName}}</option>
+                    </select>
+                    <div *ngIf="isInvalid('toMember')" class="ui red pointing above ui label">{{validationErrorMessage}} member name</div>
+                </div>
+
+                <div class="field four wide">
+                    <br>
+                    <input type="text" placeholder="Account" id="toAccountTxt" class="disabled" disabled="true" formControlName="toAccount" [(ngModel)]="toAccount">
+                </div>
+            </div>
+
+            <div class="field required four wide">
+                <label>Amount</label>
+                <div class="two inline field">
+                    <input type="text" maxlength="10" (keypress)="filterDigitsOnly($event)" placeholder="Amount" id="amountTxt" [(ngModel)]="amount"
+                        class="form-control" formControlName="amount">
+                    <label class="ether">ETHER</label>
+                </div>
+
+                <div *ngIf="isInvalid('amount')" class="ui red pointing above ui label">{{validationErrorMessage}} amount</div>
+            </div>
+
+            <button id="sendButton" class="ui blue submit button small top-aligned">Send</button>
+
+        </form>
+    </div>
+
+
+
+
+</ion-content>

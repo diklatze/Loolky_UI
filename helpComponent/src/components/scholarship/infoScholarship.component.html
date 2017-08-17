@@ -1,0 +1,106 @@
+<div [hidden]="isSummaryMode" class="ui error small form segment">
+    <form [formGroup]="infoScholarshipForm" class="ui medium form" #f="ngForm">
+        <div *ngIf="messages" class="ui error message">
+            <div id="errorMessageTxt" class="header" *ngFor="let message of messages">{{message.errorDescription}}</div>
+        </div>
+
+        <transactionState [transactionState]="transactionState"></transactionState>
+
+        <div class="two fields">
+            <div class="field four wide">
+                <label>Status</label>
+                <input type="text" id="statusTxt" class="disabled" [disabled]="true" [ngModelOptions]="{standalone: true}" [ngModel]="infoScholarship.status">
+            </div>
+            <div class="field four wide">
+                <label>Create date</label>
+                <my-date-picker [locale]="language" [options]="disabledDatePickerOptions" id="createDateTxt" [ngModel]="{date: {year: infoScholarship?.createDate?.getFullYear(), month: infoScholarship?.createDate?.getMonth() + 1, day: infoScholarship?.createDate?.getDate()}}"
+                    class="form-control disabled" formControlName="createDate"></my-date-picker>
+            </div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Name</label>
+            <input maxlength="50" placeholder="Name" type="text" id="nameTxt" [(ngModel)]="infoScholarship.name" class="form-control"
+                formControlName="name">
+            <div *ngIf="isInvalid('name')" class="ui red pointing above ui label">{{validationErrorMessage}} name</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Description</label>
+            <textarea maxlength="500" rows="2" placeholder="Description" id="descriptionTxt" [(ngModel)]="infoScholarship.description"
+                class="form-control" formControlName="description"></textarea>
+            <div *ngIf="isInvalid('description')" class="ui red pointing above ui label">{{validationErrorMessage}} description</div>
+        </div>
+
+        <div class="two fields">
+            <div class="field required four wide">
+                <label>Open date</label>
+                <my-date-picker [locale]="language" placeholder="Open date" [options]="datePickerOptions" id="openDate" #openDate class="form-control"
+                    formControlName="openDate" (dateChanged)="infoScholarship.openDate=$event.jsdate" [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('openDate')" class="ui red pointing above ui label">{{validationErrorMessage}} open date</div>
+            </div>
+
+            <div class="field required four wide">
+                <label>Publish result date</label>
+                <my-date-picker [locale]="language" placeholder="Publish result date" [options]="datePickerOptions" id="publishResultDate"
+                    #publishResultDate class="form-control" formControlName="publishResultDate" (dateChanged)="infoScholarship.publishResultDate=$event.jsdate"
+                    [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('publishResultDate')" class="ui red pointing above ui label">{{validationErrorMessage}} publish result date</div>
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field required four wide">
+                <label>Application deadline date</label>
+                <my-date-picker [locale]="language" placeholder="Application deadline date" [options]="datePickerOptions" id="applicationDeadlineDate"
+                    #applicationDeadlineDate class="form-control" formControlName="applicationDeadline" (dateChanged)="infoScholarship.applicationDeadline=$event.jsdate"
+                    [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('applicationDeadline')" class="ui red pointing above ui label">{{validationErrorMessage}} application deadline date</div>
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field required four wide">
+                <label>Maximum amount</label>
+                <input type="text" maxlength="9" (keypress)="filterDigitsOnly($event)" placeholder="Maximum amount" id="maxAmountTxt" [(ngModel)]="infoScholarship.maxAmount"
+                    class="form-control" formControlName="maxAmount">
+                <div *ngIf="isInvalid('maxAmount')" class="ui red pointing above ui label">{{validationErrorMessage}} maximum amount</div>
+            </div>
+
+            <div class="field required four wide">
+                <label>Currency</label>
+                <select class="ui fluid search dropdown form-control" #currencyCombo id="currencyCombo" [(ngModel)]="infoScholarship.ccy"
+                    formControlName="ccy">
+                    <option value="">Currency</option>
+                    <option *ngFor="let currency of ccyArr" [value]="currency.value">{{currency.desc}}</option>
+                </select>
+                <div *ngIf="isInvalid('ccy')" class="ui red pointing above ui label">{{validationErrorMessage}} currency</div>
+            </div>
+        </div>
+
+        <div class="two fields">
+            <div class="field required four wide">
+                <label>Number of awards</label>
+                <input type="text" maxlength="3" (keypress)="filterDigitsOnly($event)" placeholder="Number of awards" id="numberOfAwards"
+                    [(ngModel)]="infoScholarship.numberOfAwards" class="form-control" formControlName="numberOfAwards">
+                <div *ngIf="isInvalid('numberOfAwards')" class="ui red pointing above ui label">{{validationErrorMessage}} number of awards</div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div [hidden]="!isSummaryMode" class="accordion-wrapper">
+    <accordion [title]="accordionTitle" [id]="'infoScholarshipAccordion'" [isOpen]="true">
+        <div class="ui tiny list">
+            <div id="statusSummaryModeTxt" class="item"><b>Status: </b>{{infoScholarship?.status}}</div>
+            <div id="createDateSummaryModeTxt" class="item"><b>Create date: </b>{{infoScholarship?.createDate | date:'shortDate'}}</div>
+            <div id="nameSummaryModeTxt" class="item"><b>Name: </b>{{infoScholarship?.name}}</div>
+            <div id="descriptionSummaryModeTxt" class="item"><b>Description: </b>{{infoScholarship?.description}}</div>
+            <div id="amountAndCcySummaryModeTxt" class="item"><b>Maximum amount: </b>{{infoScholarship.maxAmount? (infoScholarship.maxAmount | number): ''}} {{infoScholarship?.ccy}}</div>
+            <div id="openDateSummaryModeTxt" class="item"><b>Open date: </b>{{infoScholarship?.openDate | date:'shortDate'}}</div>
+            <div id="publishDateSummaryModeTxt" class="item"><b>Published results date: </b>{{infoScholarship?.publishResultDate | date:'shortDate' }}</div>
+            <div id="applicationDeadlineSummaryModeTxt" class="item"><b>Application deadline: </b>{{infoScholarship?.applicationDeadline | date:'shortDate' }}</div>
+            <div id="numberOfAwardsSummaryModeTxt" class="item"><b>Number of awards: </b>{{infoScholarship?.numberOfAwards}}</div>
+        </div>
+    </accordion>
+</div>

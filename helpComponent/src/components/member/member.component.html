@@ -1,0 +1,52 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment" style="margin: 0px 0px 0px 0px; border-radius: 0px;">
+        <form [formGroup]="memberForm" (ngSubmit)="onSubmit(f.value)" class="ui medium form" #f="ngForm">
+            <div class="two fields">
+                <div *ngIf="messages" class="ui error message">
+                    <div id="memberMessage" *ngFor="let message of messages">{{message.errorDescription}}</div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Status</label>
+                    <input placeholder="Status" type="text" id="status" class="form-control disabled" formControlName="status">
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field required">
+                    <label>Member Type</label>
+                    <select name="memberType" class="ui dropdown" id="memberType" [(ngModel)]="member.memberType" formControlName="memberType">
+                    <option value="">Member type</option>
+                    <option *ngFor="let type of memberTypes" [value]="type">{{getMemberTypeDescription(type)}}</option>
+                </select>
+                    <div id="memberTypeErr" *ngIf="memberForm.controls['memberType'].touched && !memberForm.controls['memberType'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} member type</div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field required">
+                    <label>Member full name</label>
+                    <input maxlength="35" placeholder="Member full name" type="text" id="fullName" [(ngModel)]="member.fullName" class="form-control"
+                        formControlName="fullName">
+                    <div id="fullNameErr" *ngIf="memberForm.controls['fullName'].touched && !memberForm.controls['fullName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} member full name</div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field required">
+                    <label>Member short name</label>
+                    <input maxlength="10" placeholder="Member short name" type="text" id="shortName" [(ngModel)]="member.shortName" class="form-control"
+                        formControlName="shortName">
+                    <div id="shortNameErr" *ngIf="memberForm.controls['shortName'].touched && !memberForm.controls['shortName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} member short name</div>
+                </div>
+            </div>
+            <button id="addButton" class="ui blue submit button small">Add</button>
+
+        </form>
+    </div>
+</ion-content>

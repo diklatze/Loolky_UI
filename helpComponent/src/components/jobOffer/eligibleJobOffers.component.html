@@ -1,0 +1,13 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile" [pageTitleCounter]="pageTitleCounter"></pageHeaderMobile>
+    <pageHeader [pageTitleCounter]="pageTitleCounter" [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let jobOffer of jobOffers; let i=index">
+            <jobOfferStrip [jobOfferData]="jobOffer" [delegateFunction]="loadJobOffer" [fields]="eligibleJobOfferFields"
+                [position]="i" [userId]="username" [jobOfferStripMode]="jobOfferStripMode" [hideheart]=hideheart></jobOfferStrip>
+        </div>
+    </ion-list>
+</ion-content>

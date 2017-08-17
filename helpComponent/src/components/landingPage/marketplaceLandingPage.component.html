@@ -1,0 +1,23 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home" padding>
+
+        <br>
+
+        <div class="ui doubling three column grid">
+            <div class="column clickable" (click)="createMember()"><i class="add user icon" id="createMemberIcon"></i>Add Member</div>
+            <div class="column clickable" (click)="createUser()"><i class="add user icon" id="createMemberUserIcon"></i>Add Member User</div>
+            <div class="column clickable" (click)="createApplicationUser()"><i class="add user icon" id="createApplicationUserIcon"></i>Add Application User</div>
+        </div>
+
+        <br><br><br>
+
+        <div class="ui doubling three column grid">
+            <div class="column clickable" (click)="sendFunds()"><i class="money icon" id="sendFundsIcon"></i>Send Funds</div>
+            <div class="column clickable" (click)="showDashboard()"><i class="bar chart icon" id="dashboardIcon"></i>Dashboard</div>
+        </div>
+
+</ion-content>

@@ -1,0 +1,12 @@
+<ion-header *ngIf="!hideHeader">
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" [pageTitleCounter]="pageTitleCounter" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let appliedLoan of appliedLoans; let i = index ">
+            <studentLoanStrip [studentLoanData]="appliedLoan" [delegateFunction] = "loadStudentLoan" [fields] = "appliedLoanFields" [position]="i"> </studentLoanStrip>   
+        </div>
+    </ion-list>
+</ion-content>

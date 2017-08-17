@@ -1,0 +1,13 @@
+<ion-header *ngIf="!hideHeader">
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" [pageTitleCounter]="pageTitleCounter" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let appliedScholarship of appliedScholarships; let i = index">
+            <studentScholarshipStrip [studentScholarshipData]="appliedScholarship" [delegateFunction]="loadStudentScholarship" [fields]="fieldsForStripRepresentation"
+                [position]="i"> </studentScholarshipStrip>
+        </div>
+    </ion-list>
+</ion-content>

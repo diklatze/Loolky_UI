@@ -1,0 +1,39 @@
+<ion-header>
+	 <pageHeader #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+<ion-content class="home">
+  <div class="box">
+    <div class="ui one column stackable grid" style="width:500px">
+      <div class="column">
+        <h2 class="ui teal image header">
+          <div class="content">
+          </div>
+        </h2>
+        <form class="ui large form" method="post">
+          <div class="ui stacked segment">
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input type="text" name="email" id="email" placeholder="User Name" [(ngModel)]="usernameInput">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input type="password" name="password" placeholder="Password" [(ngModel)]="passwordInput">
+              </div>
+            </div>
+            <div class="ui red message" *ngIf="errorString">{{errorString}}</div>
+            <button id="loginBtn" class="ui fluid large grey button" (click)="login()">Sign In</button>
+          </div>
+        </form>
+        <div class="ui message">
+          <a (click)="redirectToForgotPassword()">Forgot password?</a>
+        </div>
+        <div class="ui message">
+          Not enrolled? <a id="signUpNowBtn" (click)="redirectToSignup()">Sign up now.</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

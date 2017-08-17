@@ -1,0 +1,12 @@
+<div [id]="id" #accordion class="ui large form styled accordion fluid">
+
+    <div #accordionTitle class="title">
+        <i class="outline icon" [ngClass]="isAllExpanded()? 'minus square': 'plus square'" *ngIf="showExpandAllButton" (click)="expandAll($event)"></i>
+        <i class="dropdown icon"></i> {{title}}
+    </div>
+
+    <div class="content">
+        <ng-content></ng-content>
+    </div>
+
+</div>

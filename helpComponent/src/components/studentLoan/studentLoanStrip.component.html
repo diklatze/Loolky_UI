@@ -1,0 +1,64 @@
+<ion-item *ngIf="studentLoanData.viewed!=viewedType.SUBMITTED" class="clickable" [ngClass]="{'viewed':studentLoanData.viewed == viewedType.VIEWED, 'transaction-failed': studentLoanData.transactionState?.state == OfferTransactionState.failed}"
+    (click)="delegateFunction(position)">
+    <div *ngIf="userType==UserType.Government.toString() || userType==UserType.EIUser.toString()" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <td>
+                    <h3 [id]="'loanNameTxt'+position" class="ui header green">{{studentLoanData.loanType.info.name}}</h3>
+                </td>
+                <td align="right">
+                    <a class="ui blue label small">{{studentLoanData.viewed==viewedType.VIEWED? 'Viewed': 'Pending'}}</a>
+                    <a class="ui red label small" *ngIf="studentLoanData.loanType.info.status == 'Closed'">Closed</a>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <font size="2">
+                        <table *ngFor="let field of fields; let j = index" class="inner-table">
+                            <tr>
+                                <td [id]="field.id + position">
+                                    {{field.text}} : {{getFieldContent(field)}}
+                                </td>
+                            </tr>
+                        </table>
+                    </font>
+                </td>
+                <td align="right"><i class="ui angle double right icon"></i></td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="userType==UserType.Student.toString()" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <th align="left">
+                    {{fields[0].text}}
+                </th>
+                <th align="left">
+                    {{fields[1].text}}
+                </th>
+            </tr>
+
+            <tr>
+                <td [id]="fields[0].id" align="left">
+                    {{getFieldContent(fields[0])}}
+                </td>
+                <td [id]=" fields[1].id" align="left">
+                    {{getFieldContent(fields[1])}}
+                </td>
+            </tr>
+
+            <tr>
+                <td [id]="fields[2].id">
+                    <ion-icon ios="ios-clock-outline" md="ios-clock-outline"></ion-icon>
+                    {{dateSentence}}:{{getFieldContent(fields[2])}}
+                </td>
+                <td *ngIf="studentLoanData.transactionState?.state">
+                    <b>State: {{studentLoanData.transactionState.state}}</b>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</ion-item>

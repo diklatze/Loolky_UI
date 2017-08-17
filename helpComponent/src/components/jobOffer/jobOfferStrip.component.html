@@ -1,0 +1,65 @@
+<ion-item [hidden]="jobOfferData.viewed==viewedType.SUBMITTED" [ngClass]="{'viewed':jobOfferData.viewed==viewedType.VIEWED ,
+    'clickable' : jobOfferData.info.status!='Closed'}" (click)="jobOfferData.info.status!='Closed' ? delegateFunction(position) :'' ">
+    <!-- Template for SAVED job offer types -->
+    <div *ngIf="JobOfferStripMode.SAVED==jobOfferStripMode" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <th align="left">
+                    {{fields[0].text}}
+                </th>
+                <th align="left">
+                    {{fields[1].text}}
+                </th>
+                <td align="right" class="padding-right">
+                    <ion-icon *ngIf="!hideheart" [id]="jobOfferData.saved? 'saved': 'unSaved'" class="column clickable" [name]="jobOfferData.saved? 'heart': 'heart-outline'"
+                        color="favorite" (click)="onSaveOrUnsave($event, jobOfferData.saved)"></ion-icon>
+                </td>
+            </tr>
+            <tr>
+                <td [id]="fields[0].id + position" align="left">
+                    {{getFieldContent(fields[0])}}
+                </td>
+                <td [id]="fields[1].id + position" align="left">
+                    {{getFieldContent(fields[1])}}
+                </td>
+            </tr>
+            <tr>
+                <td [id]="fields[2].id + position">
+                    <ion-icon ios="ios-clock-outline" md="ios-clock-outline"></ion-icon> {{dateSentence}}:{{getFieldContent(fields[2])}}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Template for ELIGIBLE job offer types -->
+    <div *ngIf="JobOfferStripMode.ELIGIBLE==jobOfferStripMode" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <td>
+                    <h3 [id]="'jobOfferNameTxt'+position" class="ui header green">{{jobOfferData.info.name}}</h3>
+                </td>
+                <td align="right" class="padding-right">
+                    <a class="ui blue label small" *ngIf="jobOfferData.viewed==viewedType.VIEWED">Viewed</a>
+                    <ion-icon *ngIf="!hideheart" [id]="jobOfferData.saved? 'saved': 'unSaved'" class="column clickable" [name]="jobOfferData.saved? 'heart': 'heart-outline'"
+                        color="favorite" (click)="onSaveOrUnsave($event, jobOfferData.saved)"></ion-icon>
+                    <a class="ui red label small" *ngIf="jobOfferData.info.status == 'Closed'">Closed</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <font size="2">
+                        <table *ngFor="let field of fields; let j = index" class="inner-table">
+                            <tr>
+                                <td class="padding-right">{{field.text}}</td>
+                                <td [id]="field.id + position">
+                                    <div [ngClass]="{'text-overflow': isMobile}">{{getFieldContent(field)}}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </font>
+                </td>
+                <td align="right"><i class="ui angle double right icon"></i></td>
+            </tr>
+        </table>
+    </div>
+</ion-item>

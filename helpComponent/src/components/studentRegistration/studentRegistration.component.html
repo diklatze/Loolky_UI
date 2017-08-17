@@ -1,0 +1,157 @@
+<ion-header *ngIf="!hideHeader">
+    <pageHeaderMobile [pageTitle]="pageTitle" #pageHeaderMobile showWhen="mobile" [showProfileTitle]=true></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment" style="margin: 0px 0px 0px 0px; border-radius: 0px;">
+        <form [formGroup]="studentForm" (ngSubmit)="onSubmit(f.value)" class="ui medium form" #f="ngForm">
+            <div *ngIf="messages" class="ui error message">
+                <div id="registrationMessage" class="header" *ngFor="let message of messages">{{message.errorDescription}}</div>
+            </div>
+
+            <div class="two fields">
+                <div class="field required">
+                    <label>Status</label>
+                    <!--<input placeholder="Status" type="text" id="status" class="form-control disabled" formControlName="status">-->
+                    <select *ngIf="!readOnlyMode" class="ui fluid dropdown form-control" #statusDropdown name="status" id="status" [(ngModel)]="student.status"
+                        formControlName="status">
+                        <option value="">Status</option>
+                        <option *ngFor="let status of statuses" [value]="status">{{status}}</option>
+                    </select>
+                    <input *ngIf="readOnlyMode" maxlength="50" type="text" id="status" [value]="student?.status" class="form-control" formControlName="status">
+                    <div *ngIf="studentForm.controls['status'].touched && !studentForm.controls['status'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} status</div>
+                </div>
+
+
+                <div class="field">
+                    <label>Registration date</label>
+                    <input type="text" id="registrationDate" class="form-control disabled" formControlName="registrationDate">
+                </div>
+            </div>
+
+
+            <div class="two fields">
+                <div class="field required eight wide">
+                    <label>Family name</label>
+                    <input maxlength="30" placeholder="Family name" type="text" id="familyName" [(ngModel)]="student.familyName" class="form-control"
+                        formControlName="familyName">
+                    <div *ngIf="studentForm.controls['familyName'].touched && !studentForm.controls['familyName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} family name</div>
+                </div>
+                <div class="field required four wide">
+                    <label>ID type</label>
+                    <input maxlength="30" placeholder="ID type" type="text" id="idType" [(ngModel)]="student.idType" class="form-control" formControlName="idType">
+                    <div *ngIf="studentForm.controls['idType'].touched && !studentForm.controls['idType'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} ID type</div>
+                </div>
+                <div class="field required four wide">
+                    <label>ID number</label>
+                    <input maxlength="15" placeholder="ID number" type="text" id="idNumber" [(ngModel)]="student.idNumber" class="form-control"
+                        formControlName="idNumber">
+                    <div *ngIf="studentForm.controls['idNumber'].touched && !studentForm.controls['idNumber'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} ID number</div>
+                </div>
+            </div>
+
+
+            <div class="two fields">
+                <div class="field required">
+                    <label>Given name</label>
+                    <input maxlength="30" placeholder="Given name" type="text" id="givenName" [(ngModel)]="student.givenName" class="form-control"
+                        formControlName="givenName">
+                    <div *ngIf="studentForm.controls['givenName'].touched && !studentForm.controls['givenName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} given name</div>
+                </div>
+                <div class="field required">
+                    <label>Email address</label>
+                    <input maxlength="100" placeholder="Email address" type="text" id="email" [(ngModel)]="student.email" class="form-control"
+                        formControlName="email">
+                    <div *ngIf="studentForm.controls['email'].touched && !studentForm.controls['email'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} email address. For example: me@example.com</div>
+                </div>
+            </div>
+
+
+            <div class="two fields">
+                <div class="field">
+                    <label>Address line 1</label>
+                    <input maxlength="50" placeholder="Address line 1" type="text" id="address1" [(ngModel)]="student.address1" class="form-control"
+                        formControlName="address1">
+                    <div *ngIf="studentForm.controls['address1'].touched && !studentForm.controls['address1'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} address line 1</div>
+                </div>
+
+                <div class="field required">
+                    <label>Faculty</label>
+                    <select *ngIf="!readOnlyMode" #facultyDropdown class="ui fluid dropdown form-control" name="faculty" id="faculty" [(ngModel)]="student.faculty"
+                        formControlName="faculty">
+                        <option value="">Faculty</option>
+                        <option *ngFor="let faculty of faculties" [ngValue]="faculty">{{faculty.name}}</option>
+                    </select>
+                    <input *ngIf="readOnlyMode" maxlength="50" type="text" id="faculty" [value]="student?.faculty?.name" class="form-control"
+                        formControlName="faculty">
+                    <div *ngIf="studentForm.controls['faculty'].touched && !studentForm.controls['faculty'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} faculty</div>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field">
+                    <label>Address line 2</label>
+                    <input maxlength="50" placeholder="Address line 2" type="text" id="address2" [(ngModel)]="student.address2" class="form-control"
+                        formControlName="address2">
+                    <div *ngIf="studentForm.controls['address2'].touched && !studentForm.controls['address2'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} address line 2</div>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field">
+                    <label>City</label>
+                    <input maxlength="35" placeholder="City" type="text" id="city" [(ngModel)]="student.city" class="form-control" formControlName="city">
+                    <div *ngIf="studentForm.controls['city'].touched && !studentForm.controls['city'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} city</div>
+                </div>
+
+                <div class="field two wide">
+                    <label>Level of Study</label>
+                    <input maxlength="20" placeholder="Level of Study" type="text" id="levelOfStudy" [(ngModel)]="student.levelOfStudy" class="form-control"
+                        formControlName="levelOfStudy">
+                    <div *ngIf="studentForm.controls['levelOfStudy'].touched && !studentForm.controls['levelOfStudy'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} level of study</div>
+                </div>
+                <div class="field two wide">
+                    <label>Semester</label>
+                    <input maxlength="10" placeholder="Semester" type="text" id="semester" [(ngModel)]="student.semester" class="form-control"
+                        formControlName="semester">
+                    <div *ngIf="studentForm.controls['semester'].touched && !studentForm.controls['semester'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} semester</div>
+                </div>
+                <div class="field two wide">
+                    <label>Year</label>
+                    <input maxlength="4" placeholder="Year" type="text" id="year" [(ngModel)]="student.year" class="form-control" formControlName="year">
+                    <div *ngIf="studentForm.controls['year'].touched && !studentForm.controls['year'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} year</div>
+                </div>
+            </div>
+
+
+            <div class="two fields">
+                <div class="field">
+                    <label>Province/State</label>
+                    <input maxlength="15" placeholder="Province/State" type="text" id="stateOrProvince" [(ngModel)]="student.stateOrProvince"
+                        class="form-control" formControlName="stateOrProvince">
+                    <div *ngIf="studentForm.controls['stateOrProvince'].touched && !studentForm.controls['stateOrProvince'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} province/state</div>
+                </div>
+                <div class="field two wide required">
+                    <label>% of studies</label>
+                    <input maxlength="3" (keypress)="filterDigitsOnly($event)" placeholder="% of studies" type="text" id="percentOfStudies" [(ngModel)]="student.percentOfStudies"
+                        class="form-control" formControlName="percentOfStudies">
+                    <div *ngIf="studentForm.controls['percentOfStudies'].touched && !studentForm.controls['percentOfStudies'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} % of studies</div>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field">
+                    <label>Zip code</label>
+                    <input maxlength="15" placeholder="Zip code" type="text" id="postalCode" [(ngModel)]="student.postalCode" class="form-control"
+                        formControlName="postalCode">
+                    <div *ngIf="studentForm.controls['postalCode'].touched && !studentForm.controls['postalCode'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} zip code</div>
+                </div>
+            </div>
+
+            <button *ngIf="!readOnlyMode && !updateMode" id="registrationButton" class="ui blue submit button small">Register</button>
+        </form>
+    </div>
+</ion-content>

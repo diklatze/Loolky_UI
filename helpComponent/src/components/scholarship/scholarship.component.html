@@ -1,0 +1,81 @@
+<div class="ui huge message noshadow">
+    <div class="ui grid">
+        <!--Left Ad block-->
+        <div hideWhen="mobile" class="four wide column"></div>
+
+        <!-- Central block -->
+        <div [class]="isMobile? 'sixteen wide column': 'eight wide column'">
+            <div id="scholarshipNameTxt" align="center">{{scholarship.info.name}}</div>
+
+            <div align="center">
+                <button hideWhen="mobile" class="ui button" [disabled]="requestSubmitted" (click)="popView()">Back</button>
+                <button *ngFor="let button of buttons" [id]="button.id" class="ui button" [ngClass]="button.class" [disabled]="requestSubmitted || button.disabled"
+                    (click)="requestSubmitted=true; button.onClick();">{{button.caption}}</button>
+            </div>
+
+            <div class="ui inverted divider"></div>
+
+            <!-- Info tab data -->
+            <div class="ui form">
+                <div class="field">
+                    <label id="descriptionLbl" class="header">Description</label>
+                    <div id="descriptionTxt" class="field-content">{{scholarship.info.description}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="openDateLbl" class="header">Open date</label>
+                    <div id="openDateTxt" class="field-content">{{scholarship.info.openDate | date:'shortDate'}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="publishResultDateLbl" class="header">Publish result date</label>
+                    <div id="publishResultDateTxt" class="field-content">{{scholarship.info.publishResultDate | date:'shortDate'}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="deadlineDateLbl" class="header">Application deadline date</label>
+                    <div id="deadlineDateTxt" class="field-content">{{scholarship.info.applicationDeadline | date:'shortDate'}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="amountLbl" class="header">Maximum amount</label>
+                    <div id="amountTxt" class="field-content">{{scholarship.info.maxAmount}}{{' '}}{{scholarship.info.ccy}}</div>
+                </div>
+
+
+                <div class="field">
+                    <label id="numberOfAwardsLbl" class="header">Number of awards</label>
+                    <div id="numberOfAwardsTxt" class="field-content">{{scholarship.info.numberOfAwards? (scholarship.info.numberOfAwards | number): scholarship.info.numberOfAwards}}</div>
+                </div>
+               
+                <!-- T&C tab data -->
+                <div class="ui inverted divider"></div>
+
+                <!--if Eligible mode-->
+                <ng-container *ngIf="dynamicFieldsWithValues == undefined">
+                    <ng-container *ngFor="let dynamicField of scholarship?.requiredInfo?.dynamicFields; let i=index;">
+                        <div [class]="!isMobile && dynamicField.constraints.type!=FieldTypeEnum.free_text? 'field five wide': 'field'">
+                            <dynamicFieldRepresentation #field [fieldMetadata]="dynamicField"></dynamicFieldRepresentation>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <!--if My Scholarships Pending/approved/declined mode-->
+                <ng-container *ngIf="dynamicFieldsWithValues">
+                    <div class="field" *ngFor="let dynamicField of dynamicFieldsWithValues; let i = index">
+                        <label [id]="dynamicField.name+'Lbl'" class="header">{{dynamicField.name}}</label>
+                        <div [id]="dynamicField.name+'Value'" class="field-content">
+                            <dynamicFieldValue [dynamicField]="dynamicField"></dynamicFieldValue>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <br>
+            </div>
+        </div>
+
+        <!--Right Ad block-->
+        <div hideWhen="mobile" class="four wide column"></div>
+
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+
+    <ion-segment padding mode="ios" [(ngModel)]="selectedTabIndex" color="segment-buttons">
+        <ion-segment-button *ngFor="let tab of tabs; let i = index;" [id]="tab.id" [value]="i" (ionSelect)="tab.onClick()">
+            <ion-icon [name]="tab.iconName"> {{tab.caption}}</ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content class="home" #content>
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div *ngIf="errMessages" class="ui error message">
+        <div id="messageLbl" *ngFor="let errMessage of errMessages">{{errMessage?.errorDescription}}</div>
+    </div>
+
+    <div [ngSwitch]="offerType" [hidden]="!(selectedTabIndex==0 || isSummaryMode)">
+        <infoScholarship *ngSwitchCase="OfferType.scholarship" #infoOffer [isSummaryMode]="isSummaryMode"></infoScholarship>
+        <infoLoanType *ngSwitchCase="OfferType.loanType" #infoOffer [isSummaryMode]="isSummaryMode"></infoLoanType>
+        <infoJobOffer *ngSwitchCase="OfferType.jobOffer" #infoOffer [isSummaryMode]="isSummaryMode"></infoJobOffer>
+    </div>
+
+    <eligibilityOffer #eligibilityOffer [offerType]="offerType" [hidden]="!(selectedTabIndex==1 || isSummaryMode)" [isSummaryMode]="isSummaryMode"></eligibilityOffer>
+    <requiredInfoOffer #requiredInfoOffer [offerType]="offerType" [hidden]="!(selectedTabIndex==2 || isSummaryMode)" [isSummaryMode]="isSummaryMode"></requiredInfoOffer>
+</ion-content>
+
+<ion-footer>
+    <div padding>
+        <button id="closeBtn" [disabled]="isButtonsDisabled" (click)="close()" class="ui blue button small">Close</button>
+        <button id="nextBtn" [disabled]="isButtonsDisabled" *ngIf="selectedTabIndex < tabs?.length-1" (click)="next()" class="ui blue button small">Next</button>
+        <button id="prevBtn" [disabled]="isButtonsDisabled" *ngIf="selectedTabIndex != 0" (click)="previous()" class="ui blue button small">Previous</button>
+        <button id="submitBtn" [disabled]="isButtonsDisabled" *ngIf="selectedTabIndex == tabs?.length-1 && !readOnlyMode" (click)="submit(false)"
+            class="ui blue button small">Submit</button>
+        <button id="saveBtn" [disabled]="isButtonsDisabled" *ngIf="selectedTabIndex == tabs?.length-1 && !readOnlyMode" (click)="submit(true)"
+            class="ui blue button small">Save</button>
+        <button id="inactivateBtn" [disabled]="isButtonsDisabled" *ngIf="selectedTabIndex == tabs?.length-1 && readOnlyMode" (click)="inactivate()"
+            class="ui blue button small">Inactivate</button>
+    </div>
+</ion-footer>

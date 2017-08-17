@@ -1,0 +1,63 @@
+<div [hidden]="isSummaryMode" class="ui error small form segment">
+
+    <div *ngIf="(!requiredInfoOffer.dynamicFields || requiredInfoOffer.dynamicFields.length == 0) && !readOnlyMode" class="ui info ignored message">
+        <i class="info circle icon big"></i>{{messageNoDynamicFieldsYet}}
+        <i class="plus square outline icon green big clickable" (click)="appendRow(0)" id="addIcon"></i>
+    </div>
+
+    <ng-container *ngIf="requiredInfoOffer.dynamicFields && requiredInfoOffer.dynamicFields.length > 0">
+        <fieldMetaData #fieldMetadata *ngFor="let dynamicField of requiredInfoOffer?.dynamicFields; let i=index" [fieldMetadata]="requiredInfoOffer?.dynamicFields[i]"
+            [predefinedFields]="predefinedFields" [readOnlyMode]="readOnlyMode" [showHeaders]="i==0">
+            <ion-fab right bottom edge *ngIf="!readOnlyMode">
+                <button ion-fab mini>
+                <ion-icon name="arrow-dropleft"></ion-icon>
+            </button>
+                <ion-fab-list side="left">
+                    <button ion-fab (click)="deleteRow(i)" name="deleteRowBtn"><ion-icon name="trash"></ion-icon></button>
+                    <button ion-fab (click)="appendRow(i)" name="appendRowBtn"><ion-icon name="add-circle"></ion-icon></button>
+                    <button ion-fab (click)="swapRows(i, i+1)" name="downRowBtn" [hidden]="i==(requiredInfoOffer.dynamicFields.length-1)"><ion-icon name="arrow-round-down"></ion-icon></button>
+                    <button ion-fab (click)="swapRows(i, i-1)" name="upRowBtn" [hidden]="i==0"><ion-icon name="arrow-round-up"></ion-icon></button>
+                </ion-fab-list>
+            </ion-fab>
+        </fieldMetaData>
+
+        <ion-fab bottom left edge style="z-index:1" *ngIf="!readOnlyMode">
+            <button ion-fab mini color="secondary" (click)="appendRow()" id="appendBtn"><ion-icon name="add"></ion-icon></button>
+        </ion-fab>
+    </ng-container>
+</div>
+
+<div [hidden]="!isSummaryMode" class="accordion-wrapper">
+    <accordion [showExpandAllButton]="true" [title]="accordionTitle" [id]="'requiredInfoOfferAccordion'">
+        <ng-container *ngFor="let dynamicField of requiredInfoOffer?.dynamicFields; let i=index">
+
+            <accordion [isNested]="true" [title]="dynamicField?.name" [id]="'dynamicFieldAccordion'+i">
+                <div class="ui tiny list">
+                    <!--TODO: Move the summary mode presentation implementation to fieldMetadata.component-->
+                    <div [id]="'attributeLabelTxt'+i" class="item"><b>Attribute Label: </b>{{dynamicField?.name}}</div>
+                    <div [id]="'descriptionTxt'+i" class="item"><b>Description: </b>{{dynamicField?.description}}</div>
+                    <div [id]="'typeTxt'+i" class="item"><b>Type: </b>{{dynamicField.type? getFieldTypeDescription(dynamicField.type): ''}}</div>
+                    <div [id]="'lengthTxt'+i" class="item"><b>Length: </b>{{dynamicField?.maxLength}}</div>
+                    <div [id]="'mandatoryTxt'+i" class="item"><b>Mandatory: </b>{{dynamicField?.isMandatory}}</div>
+                    <ng-container [ngSwitch]="dynamicField?.type">
+                        <ng-container *ngSwitchCase="FieldTypeEnum.numeric">
+                            <div [id]="'minValueTxt'+i" class="item"><b>From: </b>{{dynamicField?.constraints?.minValue}}</div>
+                            <div [id]="'maxValueTxt'+i" class="item"><b>To: </b>{{dynamicField?.constraints?.maxValue}}</div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldTypeEnum.date">
+                            <div [id]="'minDateTxt'+i" class="item"><b>From: </b>{{dynamicField?.constraints?.minDate | date:'shortDate'}}</div>
+                            <div [id]="'maxDateTxt'+i" class="item"><b>To: </b>{{dynamicField?.constraints?.maxDate | date:'shortDate'}}</div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldTypeEnum.list">
+                            <div [id]="'listOfValuesTxt'+i" class="item"><b>List of values: </b>{{dynamicField?.constraints?.listOfValues? dynamicField.constraints.listOfValues.join(LIST_DELIMITER): ''}}</div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="FieldTypeEnum.mapping">
+                            <div [id]="'contractName'+i" class="item"><b>Contract: </b>{{dynamicField?.constraints?.contractName}}</div>
+                            <div [id]="'contractField'+i" class="item"><b>Field: </b>{{dynamicField?.constraints?.contractField}}</div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </accordion>
+        </ng-container>
+    </accordion>
+</div>

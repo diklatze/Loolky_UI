@@ -1,0 +1,13 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile" [pageTitleCounter]="pageTitleCounter"></pageHeaderMobile>
+    <pageHeader [pageTitleCounter]="pageTitleCounter" [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let loan of loans; let i=index">
+            <loanTypeStrip [loanTypeData]="loan" [delegateFunction]="loadLoan" [fields]="eligibleLoanFields" [position]="i" [userId]="username"
+                [afterActionFunction]="cacheLoansList"  [loanTypeStripMode]="loanTypeStripMode" [hideheart]=hideheart> </loanTypeStrip>
+        </div>
+    </ion-list>
+</ion-content>

@@ -1,0 +1,9 @@
+<ion-tabs mode="ios" id="footerTabs" showWhen="mobile" *ngIf="isShown && currentTabs" tabsPlacement="bottom" color="light" #footerTabs>
+    <ion-tab *ngFor="let tab of currentTabs; let i = index" [enabled]="tab.enabled" [tabTitle]="tab.tabTitle" [tabIcon]="tab.tabIcon" [root]="homeRoot"
+         (ionSelect)="tab.onSelect(i)" [rootParams]="tab.rootPageParams" [id]="tab.id"></ion-tab>
+</ion-tabs>
+
+<!--<ion-tabs (ionChange)="ionChange($event)"  id="footerTabs" showWhen="mobile" *ngIf="isShown && currentTabs" tabsPlacement="bottom" color="light" #footerTabs>
+    <ion-tab (ionSelect)="selectHome(0)"  tabTitle="Home" tabIcon="home" [root]="homeRoot" id="homeTab"></ion-tab>
+    <ion-tab (ionSelect)="selectLoans(1)" tabTitle="Loans" tabIcon="cash" [root]="homeRoot" id="loanTab"></ion-tab>
+</ion-tabs>-->

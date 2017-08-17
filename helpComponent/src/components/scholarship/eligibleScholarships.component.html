@@ -1,0 +1,13 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile" [pageTitleCounter]="pageTitleCounter"></pageHeaderMobile>
+    <pageHeader [pageTitleCounter]="pageTitleCounter" [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let scholarship of scholarships; let i=index">
+            <scholarshipStrip [scholarshipData]="scholarship" [delegateFunction]="loadScholarship" [fields]="eligibleScholarshipFields"
+                [position]="i" [userId]="username" [scholarshipStripMode]="scholarshipStripMode" [hideheart]=hideheart></scholarshipStrip>
+        </div>
+    </ion-list>
+</ion-content>

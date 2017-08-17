@@ -1,0 +1,21 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <div>
+        <div class="ui huge message">
+            <br><br><br>
+            <div class="ui doubling three column grid">
+                <div class="column clickable" (click)="createMember()"><i class="add user icon" id="createMemberIcon"></i>Add Member</div>
+                <div class="column clickable" (click)="createUser()"><i class="add user icon" id="createMemberUserIcon"></i>Add Member User</div>
+            </div>
+            <br><br><br><br><br>
+            <div class="ui doubling three column grid">
+                <!--<div class="column" style="cursor: pointer; cursor: hand;"><i class="money icon"></i>Transfer Ether</div>-->
+            </div>
+            <br><br><br><br><br>
+        </div>
+    </div>
+</ion-content>

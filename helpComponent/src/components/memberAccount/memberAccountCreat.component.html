@@ -1,0 +1,35 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+    <div class="ui error small form segment" style="margin: 0px 0px 0px 0px; border-radius: 0px;">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(f.value)" class="ui medium form" #f="ngForm">
+            <div *ngIf="messages" class="ui error message">
+                <div id="messageLbl" *ngFor="let message of messages">{{message.errorDescription}}</div>
+            </div>
+            <div class="two fields">
+                <div class="field required">
+                    <label>Password</label>
+                    <input maxlength="35" placeholder="Password" type="password" id="passwordTxt" [(ngModel)]="password" class="form-control"
+                        formControlName="password">
+                    <div *ngIf="form.controls['password'].touched && !form.controls['password'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} password</div>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field required">
+                    <label>Re-enter password</label>
+                    <input maxlength="35" placeholder="Re-enter password" type="password" id="rePasswordTxt" [(ngModel)]="rePassword" class="form-control"
+                        formControlName="rePassword">
+                    <div *ngIf="form.controls['rePassword'].touched && !form.controls['rePassword'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} password</div>
+                    <div *ngIf="form.invalid && form.controls['rePassword'].valid && form.controls['password'].valid" class="ui red pointing above ui label">{{passwordDontMatchMessage}}</div>
+                </div>
+            </div>
+            <button id="createBtn" class="ui blue submit button">Create</button>
+        </form>
+    </div>
+</ion-content>

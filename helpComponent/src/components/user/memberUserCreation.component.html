@@ -1,0 +1,75 @@
+<ion-header>
+	<pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+	<pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+	<modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+	<div class="ui error small form segment" style="margin: 0px 0px 0px 0px; border-radius: 0px;">
+
+		<form [formGroup]="userForm" (ngSubmit)="onSubmit(f.value)" class="ui medium form" #f="ngForm">
+
+			<div *ngIf="messages" class="ui error message">
+				<div id="registrationMessageTxt" *ngFor="let message of messages">{{message.errorDescription}}</div>
+			</div>
+
+			<div class="field eight wide">
+				<label>Status</label>
+				<input placeholder="Status" type="text" id="status" class="form-control disabled" formControlName="status">
+			</div>
+
+			<div class="field eight wide required">
+				<label>Member type</label>
+				<select class="ui fluid dropdown form-control" name="memberType" id="memberTypeCombo" #memberTypeCombo (change)="onMemberTypeChange($event.target.value)"
+				 [(ngModel)]="user.memberType" formControlName="memberType">
+  					<option value="">Member type</option>
+					<option *ngFor="let type of memberTypes" [value]="type">{{getMemberTypeDescription(type)}}</option>
+  				</select>
+				<div *ngIf="userForm.controls['memberType'].touched && !userForm.controls['memberType'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} member type</div>
+
+			</div>
+
+			<div class="field eight wide required">
+				<label>Member name</label>
+				<select class="ui fluid search dropdown form-control" name="memberName" id="memberNameCombo" #memberNameCombo [(ngModel)]="user.memberName"
+				 formControlName="memberName">
+					<option value="">Member name</option>
+					<option *ngFor="let memberName of memberNames" [value]="memberName.shortName">{{memberName.fullName}}</option>
+				</select>
+				<div *ngIf="userForm.controls['memberName'].touched && !userForm.controls['memberName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} member name</div>
+
+			</div>
+
+			<div class="field required eight wide">
+				<label>Family name</label>
+				<input maxlength="30" placeholder="Family name" type="text" id="familyNameTxt" [(ngModel)]="user.familyName" class="form-control"
+				 formControlName="familyName">
+				<div *ngIf="userForm.controls['familyName'].touched && !userForm.controls['familyName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} family name</div>
+			</div>
+
+			<div class="field required eight wide">
+				<label>Given name</label>
+				<input maxlength="30" placeholder="Given name" type="text" id="givenNameTxt" [(ngModel)]="user.givenName" class="form-control"
+				 formControlName="givenName">
+				<div *ngIf="userForm.controls['givenName'].touched && !userForm.controls['givenName'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} given name</div>
+			</div>
+
+			<div class="field required eight wide">
+				<label>Email address</label>
+				<input maxlength="100" placeholder="Email address" type="text" id="emailTxt" [(ngModel)]="user.email" class="form-control"
+				 formControlName="email">
+				<div *ngIf="userForm.controls['email'].touched && !userForm.controls['email'].valid" class="ui red pointing above ui label">Please type valid email address. For example: me@example.com</div>
+			</div>
+
+			<div class="field eight wide">
+				<label>Role</label>
+				<input maxlength="10" placeholder="Role" type="text" id="roleTxt" [(ngModel)]="user.role" class="form-control" formControlName="role">
+				<div *ngIf="userForm.controls['role'].touched && !userForm.controls['role'].valid" class="ui red pointing above ui label">{{validationErrorMessage}} role</div>
+			</div>
+
+			<button id="addBtn" class="ui blue submit button small">Add</button>
+
+		</form>
+	</div>
+</ion-content>

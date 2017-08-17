@@ -1,0 +1,25 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="no-scroller">
+    <ion-tabs style="box-sizing: inherit" tabsPlacement="top" tabsLayout="icon-top" tabsHighlight="true" selectedIndex="0" #studentDetailsTabs>
+        <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+
+        <ion-tab tabTitle="Info" [root]="studentRegistrationInfo" [rootParams]="{student:student, updateMode:true, hideHeader: true}"></ion-tab>
+        <ion-tab tabTitle="Applied Scholarships" [root]="studentAppliedScholarships" [rootParams]="{student:student, updateMode:true, hideHeader: true}"></ion-tab>
+        <ion-tab tabTitle="Applied Loans" [root]="studentAppliedLoans" [rootParams]="{student:student, updateMode:true, hideHeader: true}"></ion-tab>
+
+    </ion-tabs>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar padding>
+        <button id="closeBtn" (click)="close()" class="ui blue button small">Close</button>
+        <button id="reactivateBtn" [disabled]="reactivateButtonDisabled()" (click)="reactivate()" class="ui blue button small">Reactivate</button>
+        <button id="submitBtn" [disabled]="!isDirty() && !draft" (click)="submit()" class="ui blue button small">Publish</button>
+        <button id="rollbackBtn" [disabled]="!isDirty() && !draft" (click)="rollback()" class="ui blue button small">Rollback</button>
+        <button id="saveBtn" [disabled]="!isDirty() && !draft" (click)="saveDraft()" class="ui blue button small">Save Draft</button>
+    </ion-toolbar>
+</ion-footer>

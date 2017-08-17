@@ -1,0 +1,30 @@
+<div *ngIf="isShown" hideWhen="mobile" class="computer tablet only row">
+
+    <div class="active item center ui inverted menu red" style="margin: 0px 0px 0px 0px; border-radius: 0px; height:50px">
+        <h4 class="item" id="headerPageTitleTxt" *ngIf="pageTitle">{{pageTitle}}{{getCounter()}}</h4>
+    </div>
+    <div class="ui inverted menu navbar page grey" style="padding:0px 10px; margin:0px 0px 0px 0px; border-radius:0px; height:75px; width:100%">
+        <img src="./assets/images/dhlogo.png" alt="D+H" id="logoImg">
+        <label class="item" id="brandTxt" style="font-size: 1.3em !important;">Global Student Marketplace</label>
+
+        <a id="headerHomeBtn" class="item not-clickable" (click)="onMenuClick(HOME_BUTTON_MENU)" *ngIf="!hideNavigations && usertype">Home</a>
+
+        <div class="right menu">
+            <div class="item not-clickable" id="welcomeUsernameTxt" *ngIf="username">Welcome, {{username}}</div>
+
+            <div id="menuCombo" class="ui dropdown notinitialized" *ngIf="!hideNavigations && usertype">
+                <a><i class="inverted big settings icon" style="line-height: 70px;"></i></a>
+                <div class="ui vertical menu">
+                    <div *ngIf="usertype==UserType.Student.toString(); else elseBlock" class="item" (click)="onMenuClick(STUDENT_PROFILE_MENU)">
+                    	<i class="user icon"></i>My Profile
+                   	</div>
+                    <ng-template #elseBlock>
+                        <div class="item" (click)="onMenuClick(ACC_DETAIS_MENU)">Account Details</div>
+                        <div class="item" (click)="onMenuClick(REGISTER_MENU)">Register</div>
+                        <div class="item" (click)="onMenuClick(CHANGE_PASSWORD_MENU)">Change Password</div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<div [hidden]="isSummaryMode" class="ui error small form segment">
+    <form [formGroup]="infoJobOfferForm" class="ui medium form" #f="ngForm">
+        <div *ngIf="messages" class="ui error message">
+            <div id="errorMessageTxt" class="header" *ngFor="let message of messages">{{message.errorDescription}}</div>
+        </div>
+
+        <transactionState [transactionState]="transactionState"></transactionState>
+
+        <div class="two fields">
+            <div class="field four wide">
+                <label>Status</label>
+                <input type="text" id="statusTxt" class="disabled" [disabled]="true" [ngModelOptions]="{standalone: true}" [ngModel]="infoJobOffer.status">
+            </div>
+            <div class="field four wide">
+                <label>Create date</label>
+                <my-date-picker [locale]="language" [options]="disabledDatePickerOptions" id="createDateTxt" [ngModel]="{date: {year: infoJobOffer?.createDate?.getFullYear(), month: infoJobOffer?.createDate?.getMonth() + 1, day: infoJobOffer?.createDate?.getDate()}}"
+                    class="form-control disabled" formControlName="createDate"></my-date-picker>
+            </div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Job name</label>
+            <input maxlength="50" placeholder="Job name" type="text" id="jobNameTxt" [(ngModel)]="infoJobOffer.name" class="form-control"
+                formControlName="name">
+            <div *ngIf="isInvalid('name')" class="ui red pointing above ui label">{{validationErrorMessage}} job name</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Job brief</label>
+            <textarea maxlength="500" rows="2" placeholder="Job brief" id="jobBriefTxt" [(ngModel)]="infoJobOffer.jobBrief" class="form-control"
+                formControlName="jobBrief"></textarea>
+            <div *ngIf="isInvalid('jobBrief')" class="ui red pointing above ui label">{{validationErrorMessage}} job brief</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Responsibilities</label>
+            <!--maxlength="100"-->
+            <input placeholder="Responsibilities" type="text" id="responsibilitiesTxt" [(ngModel)]="infoJobOffer.responsibilities" class="form-control"
+                formControlName="responsibilities">
+            <div *ngIf="isInvalid('responsibilities')" class="ui red pointing above ui label">{{validationErrorMessage}} responsibilities</div>
+        </div>
+
+        <div class="field required eight wide">
+            <label>Requirements</label>
+            <!--maxlength="100"-->
+            <textarea rows="2" placeholder="Requirements" type="text" id="requirementsTxt" [(ngModel)]="infoJobOffer.requirements" class="form-control"
+                formControlName="requirements"></textarea>
+            <div *ngIf="isInvalid('requirements')" class="ui red pointing above ui label">{{validationErrorMessage}} requirements</div>
+        </div>
+
+        <div class="field eight wide required">
+            <label>Work place</label>
+            <!--maxlength="100"-->
+            <input placeholder="Work place" type="text" id="workPlaceTxt" [(ngModel)]="infoJobOffer.workPlace" class="form-control" formControlName="workPlace">
+            <div *ngIf="isInvalid('workPlace')" class="ui red pointing above ui label">{{validationErrorMessage}} work place</div>
+        </div>
+
+        <div #isPartialCheckBox class="ui checkbox field">
+            <input type="checkbox" id="isPartialCheckBox" class="hidden form-control" [(ngModel)]="infoJobOffer.isPartial" formControlName="isPartial">
+            <label>Partial</label>
+            <div *ngIf="isInvalid('isPartial')" class="ui red pointing above ui label">{{validationErrorMessage}} partial</div>
+        </div>
+
+        <br><br>
+        <h4 class="ui dividing header eight wide field">Working hours</h4>
+        <div class="three fields">
+            <div class="field three wide">
+                <label>Weekly working hours</label>
+                <input type="text" maxlength="2" (keypress)="filterDigitsOnly($event)" placeholder="hh" id="weeklyWorkingHoursTxt"
+                    [(ngModel)]="infoJobOffer.weeklyWorkingHours" class="form-control field four wide" formControlName="weeklyWorkingHours">
+                <div *ngIf="isInvalid('weeklyWorkingHours')" class="ui red pointing above ui label">{{validationErrorMessage}} weekly working hours</div>
+            </div>
+
+
+            <div class="field three wide">
+                <label>From</label>
+                <timeSelector class="form-control" formControlName="workingHoursFrom" [(ngModel)]="infoJobOffer.workingHoursFrom"></timeSelector>
+                <div *ngIf="isInvalid('workingHoursFrom')" class="ui red pointing above ui label">{{validationErrorMessage}} time 'from'</div>
+            </div>
+
+            <div class="field three wide">
+                <label>To</label>
+                <timeSelector class="form-control" formControlName="workingHoursTo" [(ngModel)]="infoJobOffer.workingHoursTo"></timeSelector>
+                <div *ngIf="isInvalid('workingHoursTo')" class="ui red pointing above ui label">{{validationErrorMessage}} time 'to'</div>
+            </div>
+        </div>
+
+
+        <br><br>
+        <h4 class="ui dividing header eight wide field">Limited period</h4>
+        <div class="two fields">
+            <div class="field four wide">
+                <label>From</label>
+                <my-date-picker [locale]="language" placeholder="From" [options]="datePickerOptions" id="limitedPeriodFromDate" #limitedPeriodFromDate
+                    class="form-control" formControlName="limitedPeriodFromDate" (dateChanged)="infoJobOffer.limitedPeriodFromDate=$event.jsdate"
+                    [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('limitedPeriodFromDate')" class="ui red pointing above ui label">{{validationErrorMessage}} from date</div>
+            </div>
+
+            <div class="field four wide">
+                <label>To</label>
+                <my-date-picker [locale]="language" placeholder="To" [options]="datePickerOptions" id="limitedPeriodToDate" #limitedPeriodToDate
+                    class="form-control" formControlName="limitedPeriodToDate" (dateChanged)="infoJobOffer.limitedPeriodToDate=$event.jsdate"
+                    [ngClass]="{'disabled': readOnlyMode}"></my-date-picker>
+                <div *ngIf="isInvalid('limitedPeriodToDate')" class="ui red pointing above ui label">{{validationErrorMessage}} to date</div>
+            </div>
+        </div>
+        <div *ngIf="!isInvalid('limitedPeriodFromDate') && !isInvalid('limitedPeriodToDate') && datesValidator()!=null" class="center-text red pointing above ui label eight wide field">'From' date should be less or equal than 'To' date</div>
+    </form>
+</div>
+
+<div [hidden]="!isSummaryMode" class="accordion-wrapper">
+    <accordion [title]="accordionTitle" [id]="'infoJobOfferAccordion'" [isOpen]="true">
+        <div class="ui tiny list">
+            <div id="statusSummaryModeTxt" class="item"><b>Status: </b>{{infoJobOffer?.status}}</div>
+            <div id="createDateSummaryModeTxt" class="item"><b>Create date: </b>{{infoJobOffer?.createDate | date:'shortDate'}}</div>
+            <div id="jobNameSummaryModeTxt" class="item"><b>Job name: </b>{{infoJobOffer?.name}}</div>
+            <div id="jobBriefSummaryModeTxt" class="item"><b>Job brief: </b>{{infoJobOffer?.jobBrief}}</div>
+            <div id="responsibilitiesSummaryModeTxt" class="item"><b>Responsibilities: </b>{{infoJobOffer?.responsibilities}}</div>
+            <div id="requirementsSummaryModeTxt" class="item"><b>Requirements: </b>{{infoJobOffer?.requirements}}</div>
+            <div id="isPartialSummaryModeTxt" class="item"><b>Partial: </b>{{(infoJobOffer?.isPartial == true)? 'true': 'false'}}</div>
+            <div id="workPlaceSummaryModeTxt" class="item"><b>Work place: </b>{{infoJobOffer?.workPlace}}</div>
+            <div id="weeklyWorkingHoursSummaryModeTxt" class="item"><b>Weekly working hours: </b>{{infoJobOffer?.weeklyWorkingHours}}</div>
+            <div id="workingHoursSummaryModeTxt" class="item"><b>Working hours: </b>{{'from: ' + getFormattedTime(infoJobOffer?.workingHoursFrom) + ' to: ' + getFormattedTime(infoJobOffer?.workingHoursTo)}}</div>
+            <div id="limitedPeriodSummaryModeTxt" class="item"><b>Limited period: </b>{{'from: '}}{{infoJobOffer?.limitedPeriodFromDate | date:'shortDate'}}{{' to: '}}{{infoJobOffer?.limitedPeriodToDate
+                | date:'shortDate'}}</div>
+        </div>
+    </accordion>
+</div>

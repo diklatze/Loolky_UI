@@ -1,0 +1,62 @@
+<ion-item [hidden]="scholarshipData.viewed==viewedType.SUBMITTED" class="clickable" [ngClass]="{'viewed':scholarshipData.viewed==viewedType.VIEWED ,
+    'clickable' : scholarshipData.info.status!='Closed'}" (click)="scholarshipData.info.status!='Closed' ? delegateFunction(position) :'' ">
+    <!-- Template for SAVED scholarship types -->
+    <div *ngIf="ScholarshipStripMode.SAVED==scholarshipStripMode" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <th align="left">
+                    Name
+                </th>
+                <th align="left">
+                    Deadline
+                </th>
+                <td align="right" class="padding-right">
+                    <ion-icon *ngIf="!hideheart" [id]="scholarshipData.saved? 'saved': 'unSaved'" class="column clickable" [name]="scholarshipData.saved? 'heart': 'heart-outline'"
+                        color="favorite" (click)="onSaveOrUnsave($event, scholarshipData.saved)"></ion-icon>
+                </td>
+            </tr>
+            <tr>
+                <td [id]="fields[0].id + position" align="left">
+                    {{getFieldContent(fields[0])}}
+                </td>
+                <td [id]="fields[1].id + position" align="left">
+                    {{getFieldContent(fields[1])}}
+                </td>
+            </tr>
+            <tr>
+                <td [id]="fields[2].id + position">
+                    <ion-icon ios="ios-clock-outline" md="ios-clock-outline"></ion-icon> {{dateSentence}}:{{getFieldContent(fields[2])}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Template for ELIGIBLE scholarship types -->
+    <div *ngIf="ScholarshipStripMode.ELIGIBLE==scholarshipStripMode" item-inner>
+        <table width="100%" class="dh-table">
+            <tr>
+                <td>
+                    <h3 [id]="'scholarshipNameTxt'+position" class="ui header green">{{scholarshipData.info.name}}</h3>
+                </td>
+                <td align="right" class="padding-right">
+                    <a class="ui blue label small" *ngIf="scholarshipData.viewed==viewedType.VIEWED">Viewed</a>
+                    <ion-icon *ngIf="!hideheart" [id]="scholarshipData.saved? 'saved': 'unSaved'" class="column clickable" [name]="scholarshipData.saved? 'heart': 'heart-outline'"
+                        color="favorite" (click)="onSaveOrUnsave($event, scholarshipData.saved)"></ion-icon>
+                    <a class="ui red label small" *ngIf="scholarshipData.info.status == 'Closed'">Closed</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <font size="2">
+                        <table *ngFor="let field of fields; let j = index" class="inner-table">
+                            <tr>
+                                <td class="padding-right">{{field.text}}</td>
+                                <td [id]="field.id + position">{{getFieldContent(field)}}</td>
+                            </tr>
+                        </table>
+                    </font>
+                </td>
+                <td align="right"><i class="ui angle double right icon"></i></td>
+            </tr>
+        </table>
+    </div>
+</ion-item>

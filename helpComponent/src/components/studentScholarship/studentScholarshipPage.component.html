@@ -1,0 +1,101 @@
+<ion-header *ngIf="!hideHeader">
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content>
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent" [header]="header"></modalMessage>
+
+    <div *ngIf="userType==UserType.Student.toString()" class="grey-bar" padding>
+        <ng-container [ngSwitch]="studentScholarship.status">
+            <div id="statusMsgTxt" *ngSwitchCase="'Pending'" [style.color]="'green'">Applied on {{studentScholarship.applyDate? (studentScholarship.applyDate | date:'short' ): ''}}</div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Approved'" [style.color]="'white'">
+                <ion-icon color="secondary" name="checkmark-circle"></ion-icon> Approved on {{studentScholarship.updateDate? (studentScholarship.updateDate | date:'short'):
+                ''}}
+            </div>
+            <div id="statusMsgTxt" *ngSwitchCase="'Declined'" [style.color]="'red'">Declined on {{studentScholarship.updateDate? (studentScholarship.updateDate | date:'short' ): ''}}</div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="userType==UserType.Organization.toString() || userType==UserType.EIUser.toString()" class="ui huge message noshadow">
+        <div class="ui grid">
+            <!--Left Ad block-->
+            <div hideWhen="mobile" class="four wide column"></div>
+
+            <!-- Central block -->
+            <div [class]="isMobile? 'sixteen wide column': 'eight wide column'">
+                <div id="scholarshipNameTxt" align="center">{{studentScholarship.scholarshipName}}</div>
+                <br>
+                <div align="center">
+                    <button [disabled]="requestSubmitted" hideWhen="mobile" id="closeBtn" class="ui button gray" (click)="popView()">Close</button>
+                    <button *ngIf="!updateMode" [disabled]="requestSubmitted" id="declineBtn" class="ui button red" (click)="approveDecline(decline)">Decline</button>
+                    <button *ngIf="!updateMode" [disabled]="requestSubmitted" id="approveBtn" class="ui button green" (click)="approveDecline(approve)">Approve</button>
+                </div>
+                <br>
+
+                <div class="ui form">
+                    <div *ngIf="!updateMode" class="field required">
+                        <label>Comments</label>
+                        <textarea maxlength="500" rows="2" placeholder="Comments" id="commentsTxt" (change)="commentsChanged()" [(ngModel)]="comments"></textarea>
+                        <div *ngIf="isInvalidComments" class="ui red pointing above ui label">Comments is mandatory</div>
+                    </div>
+
+                    <div class="ui inverted divider"></div>
+
+                    <div class="field">
+                        <label id="statusLbl" class="header">Status</label>
+                        <div id="statusTxt" class="field-content">{{studentScholarship.status}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="nameLbl" class="header">Name</label>
+                        <div id="nameTxt" class="field-content">{{studentScholarship.scholarshipName}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="descriptionLbl" class="header">Description</label>
+                        <div id="descriptionTxt" class="field-content">{{studentScholarship.scholarship.info.description}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="openDateLbl" class="header">Open date</label>
+                        <div id="openDateTxt" class="field-content">{{studentScholarship.scholarship.info.openDate | date: 'shortDate'}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="deadlineDateLbl" class="header">Deadline</label>
+                        <div id="deadlineDateTxt" class="field-content">{{studentScholarship.scholarship.info.applicationDeadline | date: 'shortDate'}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="applyDateLbl" class="header">Scholarship apply date</label>
+                        <div id="applyDateTxt" class="field-content">{{studentScholarship.applyDate | date: 'shortDate'}}</div>
+                    </div>
+
+                    <div class="field">
+                        <label id="studentIdLbl" class="header">Student ID</label>
+                        <div id="studentIdTxt" class="field-content">{{studentScholarship.studentId}}</div>
+                    </div>
+
+                    <!--Dynamic fields-->
+                    <div class="field" *ngFor="let dynamicField of studentScholarship.dynamicFields; let i = index">
+                        <label [id]="dynamicField.name+'Lbl'" class="header">{{dynamicField.name}}</label>
+                        <div [id]="dynamicField.name+'Value'" class="field-content">
+                            <dynamicFieldValue [dynamicField]="dynamicField"></dynamicFieldValue>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <!--Right Ad block-->
+                <div hideWhen="mobile" class="four wide column"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="userType==UserType.Student.toString()">
+        <scholarship [dynamicFieldsWithValues]="studentScholarship.dynamicFields || []" [scholarship]="studentScholarship.scholarship"
+            [buttons]="buttons"></scholarship>
+    </ng-container>
+</ion-content>

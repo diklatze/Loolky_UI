@@ -1,0 +1,34 @@
+<label id="dynamicLbl" class="header">{{fieldMetadata.name}}</label>
+<div *ngIf=!showAccordion() id="dynamicTxt" class="field-content">{{fieldMetadata.description}}</div>
+
+
+<div #descriptionAccordion class="ui accordion field-content">
+    <div *ngIf=showAccordion() class="title field-content">
+        <label class="field-content"><span  id="overflow">{{fieldMetadata.description}}</span><a>&nbsp;&nbsp;<i>read more...</i></a></label>
+    </div>
+    <div *ngIf=showAccordion() class="content field-content">
+        <div class="transition hidden field-content">{{fieldMetadata.description}}.</div>
+    </div>
+</div>
+<!--<label class="field-content" id="dynamicLbl" class="header">{{fieldMetadata.name}}</label>
+
+<div *ngIf="!showFullDescription" id="div2" >{{fieldMetadata.description}}</div>
+<a id="div1" *ngIf="!showFullDescription" class= "button" (click)=toggleFullDescription()>&nbsp;&nbsp;<i>read more...</i></a>
+<div  *ngIf="showFullDescription" class= "button"  (click)=toggleFullDescription() >{{fieldMetadata.description}}</div>-->
+
+
+<!--<div #descriptionAccordion class="ui accordion">
+    <div class="active title header">
+        <label class="header">{{fieldMetadata.name}}is true</label>
+        <i class="dropdown icon"></i>
+    </div>
+    <div class="content">
+        <p class="transition hidden">{{fieldMetadata.description}}.</p>
+    </div>-->
+
+<ng-container [ngSwitch]="fieldMetadata.constraints.type">
+    <numericRepresentation #field *ngSwitchCase="fieldTypeEnum.numeric" [fieldMetadata]="fieldMetadata"></numericRepresentation>
+    <dateRepresentation #field *ngSwitchCase="fieldTypeEnum.date" [fieldMetadata]="fieldMetadata"></dateRepresentation>
+    <listRepresentation #field *ngSwitchCase="fieldTypeEnum.list" [fieldMetadata]="fieldMetadata"></listRepresentation>
+    <freetextRepresentation #field *ngSwitchCase="fieldTypeEnum.free_text" [fieldMetadata]="fieldMetadata"></freetextRepresentation>
+</ng-container>

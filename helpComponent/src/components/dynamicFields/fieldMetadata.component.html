@@ -1,0 +1,90 @@
+<div class="ui segments">
+
+    <div *ngIf="showHeaders" class="ui equal width grid secondary segment tiny form">
+        <div class="two wide column required field no-margin">
+            <label>Attribute Label</label>
+        </div>
+        <div class="three wide column required field no-margin">
+            <label>Description</label>
+        </div>
+        <div class="two wide column required field no-margin">
+            <label>Type</label>
+        </div>
+        <div class="two wide column field no-margin">
+            <label>Length</label>
+        </div>
+        <div class="one wide column field no-margin">
+            <label>Mandatory</label>
+        </div>
+        <div class="six wide column field no-margin">
+            <label>Possible Values</label>
+        </div>
+    </div>
+
+
+    <div class="ui segment">
+        <form [formGroup]="fieldMetadataForm" class="ui form tiny">
+            <div class="ui equal width grid">
+                <div class="two wide column">
+                    <select #fieldNameCombo name="attributeLabel" class="form-control ui search selection dropdown fluid" [(ngModel)]="fieldMetadata.name"
+                        formControlName="name">
+                      <option *ngIf="readOnlyMode" [value]="fieldMetadata.name">{{fieldMetadata.name}}</option>
+                      <ng-container *ngIf="!readOnlyMode">
+                        <option value="">Attribute Label</option>
+                        <option *ngFor="let predefinedField of predefinedFields; let i=index;" [value]="predefinedField.name">{{predefinedField.name}}</option>
+                      </ng-container>
+
+                    </select>
+                    <div *ngIf="isInvalidField('name')" class="ui tiny red pointing above label">{{validationErrorMessage}} attribute label</div>
+                </div>
+
+                <div class="three wide column">
+                    <textarea rows="1" name="description" class="form-control ui input" maxlength="200" placeholder="Description" [ngClass]="{'disabled': fieldMetadata.isPredefined || readOnlyMode}"
+                        [(ngModel)]="fieldMetadata.description" formControlName="description">
+                    </textarea>
+                    <div *ngIf="isInvalidField('description')" class="ui tiny red pointing above label">{{validationErrorMessage}} description</div>
+                </div>
+
+                <div class="two wide column">
+                    <select #fieldTypeCombo name="type" class="form-control ui dropdown fluid" [(ngModel)]="fieldMetadata.type" [ngClass]="{'disabled': fieldMetadata.isPredefined}"
+                        formControlName="type">
+                        <option value="">Type</option>
+                        <ng-container *ngFor="let fieldType of FieldTypeEnum | keys">
+                            <option *ngIf="fieldType.key!=FieldTypeEnum.mapping" [value]="fieldType.key">{{getFieldTypeDescription(fieldType.key)}}</option>
+                        </ng-container>
+                    </select>
+                    <div *ngIf="isInvalidField('type')" class="ui tiny red pointing above label">{{validationErrorMessage}} type</div>
+                </div>
+
+                <div class="two wide column">
+                    <input type="text" name="length" maxlength="20" (keypress)="filterDigitsOnly($event)" placeholder="Length" [ngClass]="{'disabled': fieldMetadata.isPredefined || readOnlyMode}"
+                        [(ngModel)]="fieldMetadata.maxLength" class="form-control ui input" formControlName="maxLength">
+                    <div *ngIf="isInvalidField('maxLength')" class="ui tiny red pointing above label">{{validationErrorMessage}} length</div>
+                </div>
+
+                <div class="one wide column">
+                    <div class="ui fitted slider checkbox" style="vertical-align: -80%;">
+                        <input name="mandatory" type="checkbox" [(ngModel)]="fieldMetadata.isMandatory" class="form-control" formControlName="isMandatory"><label></label>
+                        <div *ngIf="isInvalidField('isMandatory')" class="ui tiny red pointing above label">{{validationErrorMessage}} mandatory</div>
+                    </div>
+                </div>
+
+                <div class="six wide column">
+                    <ng-container [ngSwitch]="fieldMetadata?.type">
+                        <numericConstraints #constraints [isDisabled]="readOnlyMode || fieldMetadata?.isPredefined" [constraints]="fieldMetadata.constraints"
+                            *ngSwitchCase="FieldTypeEnum.numeric"></numericConstraints>
+                        <mappingConstraints #constraints [isDisabled]="readOnlyMode || fieldMetadata?.isPredefined" [constraints]="fieldMetadata.constraints"
+                            *ngSwitchCase="FieldTypeEnum.mapping"></mappingConstraints>
+                        <dateConstraints #constraints [isDisabled]="readOnlyMode || fieldMetadata?.isPredefined" [constraints]="fieldMetadata.constraints"
+                            *ngSwitchCase="FieldTypeEnum.date"></dateConstraints>
+                        <listConstraints #constraints [isDisabled]="readOnlyMode || fieldMetadata?.isPredefined" [constraints]="fieldMetadata.constraints"
+                            *ngSwitchCase="FieldTypeEnum.list"></listConstraints>
+                    </ng-container>
+                </div>
+
+            </div>
+        </form>
+        <ng-content></ng-content>
+    </div>
+
+</div>

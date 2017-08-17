@@ -1,0 +1,54 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home">
+    <br><br>
+
+    <modalMessage *ngIf="messageModalShown" [actions]="actions" [active]="messageModalShown" [content]="messageContent"></modalMessage>
+    <table width="40%" class="dh-table">
+        <tr>
+            <td>
+                Government
+            </td>
+            <td width="5%">
+            </td>
+            <td width="95%">
+                <select class="ui dropdown goverment" name="goverment" id="goverment" (change)="onGovChange($event.target.value)" [(ngModel)]="currentGovermentMemberId">
+                    <option value="">Government</option>
+                    <option *ngFor="let goverment of goverments;" [value]="goverment.shortName">{{goverment.fullName}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table width="100%" style="border-collapse: separate;border-spacing: 0 1em;">
+                    <tr class="dh-table theader">
+                        <td>Faculty</td>
+                        <td width="10%"></td>
+                        <td width="60%">Category</td>
+                    </tr>
+                    <tr *ngFor="let faculty of faculties; let i = index">
+                        <td>
+                            <label [ngClass]="(currentCategories[i] >= 0) ? '' : 'ired'">{{faculty.name}}</label>
+                        </td>
+                        <td></td>
+                        <td>
+                            <select class="ui dropdown categories" name="category" id="category" [(ngModel)]="currentCategories[i]">
+                                <option value="-1">Select Category</option>
+                                <option *ngFor="let category of categories; let ii = index" [value]="ii">{{category.name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button id="closeBtn" class="ui blue submit button small" (click)="onClose()">Close</button>
+                <button id="publishBtn" class="ui blue submit button small" (click)="onPublish()">Publish</button>
+            </td>
+        </tr>
+    </table>
+</ion-content>

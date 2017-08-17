@@ -1,0 +1,32 @@
+<ion-header>
+    <pageHeaderMobile #pageHeaderMobile showWhen="mobile"></pageHeaderMobile>
+    <pageHeader [pageTitle]="pageTitle" #pageHeader hideWhen="mobile"></pageHeader>
+</ion-header>
+
+<ion-content class="home" padding>
+    <br>
+
+    <div class="ui doubling four column grid">
+        <div class="column clickable" (click)="addScholarship()"><i class="dollar icon" id="addScholarshipIcon"></i>Add Scholarship</div>
+        <div class="column clickable" (click)="appliedScholarships()"><i class="table icon" id="appliedScholarshipsIcon"></i>Applied Scholarships</div>
+        <div class="column clickable" (click)="viewScholarships()"><i class="list icon" id="scholarshipsIcon"></i>Scholarships</div>
+        <div class="column clickable" (click)="viewSavedScholarships()"><i class="file text outline icon" id="savedScholarshipsIcon"></i>Saved Scholarships</div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui doubling four column grid">
+        <div class="column clickable" (click)="addJobOffer()"><i class="travel icon" id="addJobofferIcon"></i>Add Job Offer</div>
+        <div class="column clickable" (click)="appliedJobOffers()"><i class="table icon" id="appliedJobOffersIcon"></i>Applied Job Offers</div>
+        <div class="column clickable" (click)="viewJobOffers()"><i class="list icon" id="jobOffersIcon"></i>Job Offers</div>
+        <div class="column clickable" (click)="viewSavedJobOffers()"><i class="file text outline icon" id="savedJobOffersIcon"></i>Saved Job Offers</div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui doubling four column grid">
+        <div class="column clickable" (click)="showDashboard()"><i class="bar chart icon" id="dashboardIcon"></i>Dashboard</div>
+        <div class="column clickable" (click)="createApplicationUser()"><i class="add user icon" id="createApplicationUserIcon"></i>Add Application User</div>
+    </div>
+
+</ion-content>

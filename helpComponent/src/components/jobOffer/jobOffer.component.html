@@ -1,0 +1,92 @@
+<div class="ui huge message noshadow">
+    <div class="ui grid">
+        <!--Left Ad block-->
+        <div hideWhen="mobile" class="four wide column"></div>
+
+        <!-- Central block -->
+        <div [class]="isMobile? 'sixteen wide column': 'eight wide column'">
+            <div id="jobOfferNameTxt" align="center">{{jobOffer.info.name}}</div>
+
+            <div align="center">
+                <button hideWhen="mobile" class="ui button" [disabled]="requestSubmitted" (click)="popView()">Back</button>
+                <button *ngFor="let button of buttons" [id]="button.id" class="ui button" [ngClass]="button.class" [disabled]="requestSubmitted || button.disabled"
+                    (click)="requestSubmitted=true; button.onClick();">{{button.caption}}</button>
+            </div>
+
+            <div class="ui inverted divider"></div>
+
+            <!-- Info tab data -->
+            <div class="ui form">
+                <div class="field">
+                    <label id="jobBriefLbl" class="header">Job brief</label>
+                    <div id="jobBriefTxt" class="field-content">{{jobOffer.info.jobBrief}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="responsibilitiesLbl" class="header">Responsibilities</label>
+                    <div id="responsibilitiesTxt" class="field-content">{{jobOffer.info.responsibilities}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="requirementsLbl" class="header">Requirements</label>
+                    <div id="requirementsTxt" class="field-content">{{jobOffer.info.requirements}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="partialLbl" class="header">Partial</label>
+                    <div id="partialTxt" class="field-content">{{jobOffer.info.isPartial}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="weeklyWorkingHoursLbl" class="header">Weekly working hours</label>
+                    <div id="weeklyWorkingHoursTxt" class="field-content">{{jobOffer.info.weeklyWorkingHours}}</div>
+                </div>
+
+                <div class="field" *ngIf="jobOffer.info.workingHoursFrom || jobOffer.info.workingHoursTo">
+                    <label id="workingHoursLbl" class="header">Working hours</label>
+                    <div *ngIf="jobOffer.info.workingHoursFrom" id="workingHoursFromTxt" class="field-content">from {{getFormattedTime(jobOffer.info.workingHoursFrom)}}</div>
+                    <div *ngIf="jobOffer.info.workingHoursTo" id="workingHoursToTxt" class="field-content">to {{getFormattedTime(jobOffer.info.workingHoursTo)}}</div>
+                </div>
+
+                <div class="field" *ngIf="jobOffer.info.limitedPeriodFromDate || jobOffer.info.limitedPeriodToDate">
+                    <label id="limitedPeriodLbl" class="header">Limited period</label>
+                    <div *ngIf="jobOffer.info.limitedPeriodFromDate" id="limitedPeriodFromDateTxt" class="field-content">from {{jobOffer.info.limitedPeriodFromDate | date:'shortDate'}}</div>
+                    <div *ngIf="jobOffer.info.limitedPeriodToDate" id="limitedPeriodToDateTxt" class="field-content">to {{jobOffer.info.limitedPeriodToDate | date:'shortDate'}}</div>
+                </div>
+
+                <div class="field">
+                    <label id="workPlaceLbl" class="header">Work place</label>
+                    <div id="workPlaceTxt" class="field-content">{{jobOffer.info.workPlace}}</div>
+                </div>
+
+                <!-- T&C tab data -->
+                <div class="ui inverted divider"></div>
+
+                <!--if Eligible mode-->
+                <ng-container *ngIf="dynamicFieldsWithValues == undefined">
+                    <ng-container *ngFor="let dynamicField of jobOffer?.requiredInfo?.dynamicFields; let i=index;">
+                        <div [class]="!isMobile && dynamicField.constraints.type!=FieldTypeEnum.free_text? 'field five wide': 'field'">
+                            <dynamicFieldRepresentation #field [fieldMetadata]="dynamicField"></dynamicFieldRepresentation>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <!--if My job offers Pending/approved/declined mode-->
+                <ng-container *ngIf="dynamicFieldsWithValues">
+                    <div class="field" *ngFor="let dynamicField of dynamicFieldsWithValues; let i=index">
+                        <label [id]="dynamicField.name+'Lbl'" class="header">{{dynamicField.name}}</label>
+                        <div [id]="dynamicField.name+'Value'" class="field-content">
+                            <dynamicFieldValue [dynamicField]="dynamicField"></dynamicFieldValue>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <br>
+            </div>
+        </div>
+
+        <!--Right Ad block-->
+        <div hideWhen="mobile" class="four wide column"></div>
+
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div *ngIf="isEmptyCurrentData()" class="ui info ignored message">
+    <i class="info circle icon big"></i>{{noDataMessage}}
+</div>
+<!--====================================================FREE_TEXT==============================================================-->
+<div *ngIf="mode == ModeTypeEnum.FREE_TEXT">
+    <table border="0" width="400" style="border-collapse: separate;border-spacing: 0 1em;">
+        <tr>
+            <td>
+                <i class="plus square outline icon green big clickable" (click)="onAdd()" id="addIcon"></i>
+            </td>
+            <td width="100%">
+                <div class="ui header">
+                    {{title}}
+                </div>
+            </td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let lineData of data.current_data; let i = index;">
+            <td></td>
+            <td>
+                <div *ngIf="currentlyEditedIndex!=i" class="content">
+                    {{lineData.name}}
+                </div>
+                <div *ngIf="currentlyEditedIndex==i">
+                    <div class="ui input focus fluid">
+                        <input type="text" #editedInput [value]="lineData.value" id="{{i}}valTxt" (keyup.enter)="onEdit(i)">
+                    </div>
+                    <div *ngIf="!isValidFreeTextValue" class="ui red pointing above ui label">{{validationErrorMessage}}</div>
+                </div>
+            </td>
+            <td>
+                <i class="icon msize clickable" [ngClass]="{'edit': currentlyEditedIndex!=i, 'checkmark': currentlyEditedIndex==i, 'icon-top': currentlyEditedIndex==i && !isValidFreeTextValue}" (click)="onEdit(i)"
+                    id="{{i}}editIcon"></i>
+            </td>
+        </tr>
+        <tr *ngIf="addClicked">
+            <td></td>
+            <td>
+                <div class="ui input focus fluid">
+                    <input type="text" #addInput id="addTxt" (keyup.enter)="addValue()">
+                </div>
+                <div *ngIf="!isValidFreeTextValue" class="ui red pointing above ui label">{{validationErrorMessage}}</div>
+            </td>
+            <td>
+                <i class="icon checkmark msize clickable" (click)="addValue()" [ngClass]="{'icon-top': !isValidFreeTextValue}"></i>
+            </td>
+        </tr>
+    </table>
+</div>
+<!--====================================================LIST_OF_VALUES===========================================================-->
+<div *ngIf="mode == ModeTypeEnum.LIST_OF_VALUES">
+    <table border="0" width="400" style="border-collapse: separate;border-spacing: 0 1em;">
+        <tr>
+            <td>
+                <i class="plus square outline icon green big clickable" (click)="onAdd()" id="addIcon"></i>
+            </td>
+            <td width="100%">
+                <div class="ui header">
+                    {{title}}
+                </div>
+            </td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let lineData of data.current_data; let i = index;" [ngStyle]="lineData.name == 'DELETED' && {'display' : 'none'}">
+            <td></td>
+            <td>
+                <div *ngIf="currentlyEditedIndex!=i" class="content">
+                    {{lineData.name}}
+                </div>
+            </td>
+            <td>
+                <i class="minus square outline icon red msize clickable" (click)="onRemove(i)" id="{{i}}removeIcon"></i>
+            </td>
+        </tr>
+        <tr *ngIf="addClicked">
+            <td></td>
+            <td>
+                <select *ngIf="addClicked" class="ui fluid dropdown" id="addItemCombo" (change)="addValue()">
+                    <option value="">Select item</option>
+                    <option *ngFor="let item of data.available_values" [value]="item.value === undefined? item.name: item.value">{{item.name}}</option>
+                </select>
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </table>
+</div>
