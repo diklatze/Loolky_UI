@@ -55,7 +55,7 @@ export class PageHeader implements OnInit {
           show: 300,
           hide: 800
         },
-        lastResort :true,
+        lastResort :'bottom left',
         overflow:true,
         setFluidWidth: false,
         //onShow: () => { $('#popup1').css('max-width', $(window).width()); }
@@ -71,7 +71,7 @@ export class PageHeader implements OnInit {
           show: 300,
           hide: 800
         },
-         lastResort :true,
+         lastResort :'bottom left',
          setFluidWidth: false,
         overflow:true,
       });
