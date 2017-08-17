@@ -53,7 +53,7 @@ export class PageHeader implements OnInit {
         position: 'bottom left',
         delay: {
           show: 300,
-          hide: 800
+          hide: 300
         },
         lastResort :'bottom left',
         overflow:true,
@@ -69,7 +69,7 @@ export class PageHeader implements OnInit {
         position: 'bottom left',
         delay: {
           show: 300,
-          hide: 800
+          hide: 300
         },
          lastResort :'bottom left',
          setFluidWidth: false,
