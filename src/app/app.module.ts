@@ -8,7 +8,8 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-// import { SignUpPage } from '../pages/signUpPage/signUpPage';
+
+import { SignInPage } from '../pages/signInPage/signInPage';
 
 import { PageHeader } from '../components/pageHeader/pageHeader';
 import { PageFooter } from '../components/pageFooter/pageFooter';
@@ -19,7 +20,7 @@ import { Cards } from '../components/cards/cards';
 @NgModule({
   declarations: [
     MyApp,
-   
+    SignInPage,
     // SignUpPage,
     PageHeader,
     Cards,
@@ -37,9 +38,10 @@ import { Cards } from '../components/cards/cards';
     MyApp,
     PageHeader,
     Cards,
+    SignInPage,
     PageFooter,
     // SignUpPage,
-    
+
     HomePage
   ],
   providers: [

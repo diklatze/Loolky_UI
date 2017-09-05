@@ -63,8 +63,8 @@ export class HomePage {
   // }
 
 
-  goToSignUp(){
-    this.nav.push(SignUpPage)
+  // goToSignUp(){
+  //   this.nav.push(SignUpPage)
 
-  }
+//}
 }

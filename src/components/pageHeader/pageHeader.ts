@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewChild, Directive, ElementRef, OnDestroy, OnInit, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import {SignInPage} from '../../pages/signInPage/signInPage';
 
 declare var $: any
 
@@ -37,7 +39,7 @@ export class PageHeader implements OnInit {
   @ViewChild('menuPopup3') menuPopup3ElementRef: ElementRef;  
 
 
-  constructor() { }
+  constructor(protected nav: NavController) { }
 
 
   ngOnInit() {
@@ -92,6 +94,9 @@ export class PageHeader implements OnInit {
       });
   }
 
+goToSignIn(){
+    this.nav.push(SignInPage)
 
+}
 
 }

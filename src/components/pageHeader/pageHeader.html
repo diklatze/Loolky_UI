@@ -4,7 +4,7 @@
     <div class="ui inverted menu page orange" style="margin: 0px 0px 0px 0px; border-radius: 0px; height:2px">
       <div class="right item">
       <a href="#" class="item">Join</a>
-      <a href="#" class="item">Sign In</a>
+      <a href="#" class="item" (click)="goToSignIn()">Sign In</a>
 
     </div>
        
@@ -15,7 +15,7 @@
         <img class="logo" src="../../assets/images/loolky-logo.png" style="height: 3em; width: 7em;" >
         </a>
     <a class="browse item" #menuPopup1>
-    Reviews
+    <b>Reviews</b>
     <i class="dropdown icon"></i>
   </a>
     <div id="popup1" class="ui fluid popup bottom left transition hidden" style="top: 6px; left: 1px; bottom: auto; right: auto; width: 600px;">
@@ -69,7 +69,7 @@
     </div>
 
     <a class="browse item" #menuPopup2>
-    For Sale
+    <b>For Sale</b>
     <i class="dropdown icon"></i>
   </a>
     <div id="popup2" class="ui fluid popup bottom left transition hidden" style="top: 6px; left: 1px; bottom: auto; right: auto; width: 600px;">
@@ -124,7 +124,7 @@
 
 
     <a class="browse item" #menuPopup3>
-    Loolkers
+    <b>Loolkers</b>
     <i class="dropdown icon"></i>
   </a>
     <div id="popup3" class="ui fluid popup bottom left transition hidden" style="top: 6px; left: 1px; bottom: auto; right: auto; width: 600px;">
