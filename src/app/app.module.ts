@@ -8,7 +8,7 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { SignUpPage } from '../pages/signUpPage/signUpPage';
+// import { SignUpPage } from '../pages/signUpPage/signUpPage';
 
 import { PageHeader } from '../components/pageHeader/pageHeader';
 import { PageFooter } from '../components/pageFooter/pageFooter';
@@ -20,7 +20,7 @@ import { Cards } from '../components/cards/cards';
   declarations: [
     MyApp,
    
-    SignUpPage,
+    // SignUpPage,
     PageHeader,
     Cards,
     PageFooter,
@@ -38,7 +38,7 @@ import { Cards } from '../components/cards/cards';
     PageHeader,
     Cards,
     PageFooter,
-    SignUpPage,
+    // SignUpPage,
     
     HomePage
   ],
