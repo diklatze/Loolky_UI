@@ -12,6 +12,7 @@ import { SignUpPage } from '../pages/signUpPage/signUpPage';
 
 import { PageHeader } from '../components/pageHeader/pageHeader';
 import { PageFooter } from '../components/pageFooter/pageFooter';
+import { Cards } from '../components/cards/cards';
 
 //import { Menu } from '../components/menu/menu';
 
@@ -21,6 +22,7 @@ import { PageFooter } from '../components/pageFooter/pageFooter';
    
     SignUpPage,
     PageHeader,
+    Cards,
     PageFooter,
     HomePage
   ],
@@ -34,6 +36,7 @@ import { PageFooter } from '../components/pageFooter/pageFooter';
   entryComponents: [
     MyApp,
     PageHeader,
+    Cards,
     PageFooter,
     SignUpPage,
     
